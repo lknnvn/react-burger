@@ -1,0 +1,32 @@
+.h2{
+  composes: text text_type_main-medium mb-6 from global;
+}
+
+.listWrap{
+  /*height: calc(100% - 40px);
+  position: relative;
+  overflow: auto;
+  scrollbar-width: thin;*/
+}
+
+.list {
+  composes: pl-4 pr-4 mb-10 from global;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 24px;
+}
+
+.ingredient {
+  position: relative;
+  composes: pl-4 pr-4 from global;
+  text-align: center;
+}
+
+.ingredientPrice{
+  composes: text text_type_digits-default mb-1 from global;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}

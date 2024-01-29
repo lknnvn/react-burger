@@ -1,0 +1,13 @@
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  composes: container from global;
+}
+
+.burgerIngredients {
+  composes: ml-4 mr-10 mt-10 from global;
+}
+
+.burgerConstructor {
+  composes: mr-4 pl-4 pr-4 mt-25 from global;
+}
