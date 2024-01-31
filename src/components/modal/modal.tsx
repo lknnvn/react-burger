@@ -10,7 +10,7 @@ interface ModalProps {
     children: React.ReactNode
 }
 
-const Modal: React.FC<ModalProps> = ({title, onClose, children}) => {
+const Modal: React.FC<ModalProps> = ({title,  onClose, children}) => {
 
     const handleEscPress = useCallback(
         (e: any) => {
@@ -19,7 +19,7 @@ const Modal: React.FC<ModalProps> = ({title, onClose, children}) => {
             }
         },
         [onClose]
-    )
+    );
 
     useEffect(() => {
         document.addEventListener('keydown', handleEscPress)

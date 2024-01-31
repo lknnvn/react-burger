@@ -10,7 +10,7 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
 
     return (
         <header className={styles.header}>
-            <div className={styles.container}>
+            <nav className={styles.container}>
 
                 <a
                     href="/constructor"
@@ -43,7 +43,7 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
                     <span className="pl-2">Личный кабинет</span>
                 </a>
 
-            </div>
+            </nav>
         </header>
     )
 }

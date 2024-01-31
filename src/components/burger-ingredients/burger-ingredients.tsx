@@ -4,7 +4,7 @@ import {Counter, CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-u
 import Modal from "../modal"
 import IngredientDetails from "../ingredient-details"
 import Ingredient from "../../interfaces/ingredient"
-
+import useModal from "../../hooks/useModal"
 
 interface BurgerIngredientsProps {
     ingredientsData: Ingredient[]
@@ -12,8 +12,8 @@ interface BurgerIngredientsProps {
 
 const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({ingredientsData}) => {
 
+    const { isOpen, openModal, closeModal } = useModal()
     const [current, setCurrent] = React.useState('one')
-    const [isIngredientModalOpen, setIngredientModalOpen] = useState(false)
     const [selectedIngredient, setSelectedIngredient] = useState<Ingredient | null>(null)
 
     const buns = ingredientsData.filter((ingredient) => ingredient.type === 'bun')
@@ -22,13 +22,13 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({ingredientsData}) 
 
     const handleIngredientClick = (ingredient: Ingredient) => {
         setSelectedIngredient(ingredient)
-        setIngredientModalOpen(true)
+        openModal()
     }
 
     return (
         <>
-            {isIngredientModalOpen && (
-                <Modal title={"Детали ингредиента"} onClose={() => setIngredientModalOpen(false)}>
+            {isOpen  && (
+                <Modal title={"Детали ингредиента"} onClose={closeModal}>
                     <IngredientDetails ingredient={selectedIngredient as Ingredient}/>
                 </Modal>
             )}
