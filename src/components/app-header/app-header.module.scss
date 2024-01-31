@@ -8,10 +8,21 @@
   margin-left: 112px;
 }
 
-.container{
+.nav{
   composes: container from global;
-  display: flex;
-  align-items: center;
+
+  ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    padding-left: unset;
+
+    li{
+      &:last-child{
+        margin-left: auto;
+      }
+    }
+  }
 }
 
 .link {
@@ -24,10 +35,6 @@
 
   &Active {
     color: var(--text-primary-color);
-  }
-
-  &:last-child{
-    margin-left: auto;
   }
 
   &:hover {
