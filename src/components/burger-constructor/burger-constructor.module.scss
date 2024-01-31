@@ -7,6 +7,9 @@
 .listOther {
   display: grid;
   gap: 10px;
+  height: 464px;
+  overflow: auto;
+  scrollbar-width: thin;
 }
 
 .listFooter {

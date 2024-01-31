@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import styles from './app.module.scss';
-import AppHeader from "./components/app-header";
-import BurgerIngredients from "./components/burger-ingredients";
-import BurgerConstructor from "./components/burger-constructor";
+import React, {useEffect, useState} from 'react'
+import styles from './app.module.scss'
+import AppHeader from "./components/app-header"
+import BurgerIngredients from "./components/burger-ingredients"
+import BurgerConstructor from "./components/burger-constructor"
 
-const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+const API_URL = 'https://norma.nomoreparties.space/api/ingredients'
 
 function App() {
-    const [ingredientsData, setIngredientsData] = useState([]);
+    const [ingredientsData, setIngredientsData] = useState([])
 
     const selectedIngredients = [
         {
@@ -93,27 +93,43 @@ function App() {
             "image_mobile": "https://code.s3.yandex.net/react/code/mineral_rings-mobile.png",
             "image_large": "https://code.s3.yandex.net/react/code/mineral_rings-large.png",
             "__v": 0
+        },
+        {
+            "_id": "60666c42cc7b410027a1a9bb",
+            "name": "Хрустящие минеральные кольца",
+            "type": "main",
+            "proteins": 808,
+            "fat": 689,
+            "carbohydrates": 609,
+            "calories": 986,
+            "price": 300,
+            "image": "https://code.s3.yandex.net/react/code/mineral_rings.png",
+            "image_mobile": "https://code.s3.yandex.net/react/code/mineral_rings-mobile.png",
+            "image_large": "https://code.s3.yandex.net/react/code/mineral_rings-large.png",
+            "__v": 0
         }
-    ];
+    ]
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(API_URL);
+                const response = await fetch(API_URL)
 
                 if (!response.ok) {
-                    throw new Error('Ошибка при загрузке данных');
+                    throw new Error('Ошибка при загрузке данных')
                 }
 
-                const data = await response.json();
-                setIngredientsData(data.data);
+                const data = await response.json()
+                setIngredientsData(data.data)
             } catch (error: any) {
-                console.error('Ошибка при выполнении запроса к API:', error.message);
+                console.error('Ошибка при запросе к API:', error.message)
             }
-        };
+        }
 
-        fetchData();
-    }, []);
+        fetchData().catch((error) => {
+            console.error('Произошла ошибка:', error)
+        })
+    }, [])
 
     return (
         <>
@@ -130,7 +146,7 @@ function App() {
 
             </main>
         </>
-    );
+    )
 }
 
-export default App;
+export default App

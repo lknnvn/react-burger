@@ -2,6 +2,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   composes: container from global;
+
+  @media (max-width: 1279px) {
+    grid-template-columns: unset;
+    max-width: 600px;
+  }
 }
 
 .burgerIngredients {
@@ -9,5 +14,5 @@
 }
 
 .burgerConstructor {
-  composes: mr-4 pl-4 pr-4 mt-25 from global;
+  composes: mr-4 pl-4 mt-25 from global;
 }

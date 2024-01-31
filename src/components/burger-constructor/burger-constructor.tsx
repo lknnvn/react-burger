@@ -1,33 +1,29 @@
-import React from 'react';
-import styles from './burger-constructor.module.scss';
-import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-
-interface Ingredient {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    __v: number;
-}
+import React, {useState} from 'react'
+import styles from './burger-constructor.module.scss'
+import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
+import Modal from "../modal"
+import OrderDetails from "../order-details"
+import Ingredient from "../../interfaces/ingredient"
 
 interface BurgerConstructorProps {
-    selectedIngredients: Ingredient[];
+    selectedIngredients: Ingredient[]
 }
 
 const BurgerConstructor: React.FC<BurgerConstructorProps> = ({selectedIngredients}) => {
 
-    const selectedBun = selectedIngredients.find((item) => item.type === 'bun');
-    const selectedOther = selectedIngredients.filter((item) => item.type !== 'bun');
+    const [isOrderModalOpen, setOrderModalOpen] = useState(false)
+
+    const selectedBun = selectedIngredients.find((item) => item.type === 'bun')
+    const selectedOther = selectedIngredients.filter((item) => item.type !== 'bun')
 
     return (
         <>
+            {isOrderModalOpen && (
+                <Modal onClose={() => setOrderModalOpen(false)}>
+                    <OrderDetails />
+                </Modal>
+            )}
+
             <div className={styles.list}>
 
                 {selectedBun && <ConstructorElement
@@ -39,8 +35,9 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({selectedIngredient
                 />}
 
                 <div className={styles.listOther}>
-                    {selectedOther.map((item) => (
+                    {selectedOther.map((item, i) => (
                         <ConstructorElement
+                            key={i}
                             text={item.name}
                             price={item.price}
                             thumbnail={item.image}
@@ -61,12 +58,12 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({selectedIngredient
             <div className={styles.listFooter}>
                 <span className={styles.sum}>610 <CurrencyIcon type="primary"/></span>
 
-                <Button htmlType="button" type="primary" size="large">
+                <Button onClick={() => setOrderModalOpen(true)} htmlType="button" type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default BurgerConstructor;
+export default BurgerConstructor

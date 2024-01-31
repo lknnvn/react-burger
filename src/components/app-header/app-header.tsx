@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './app-header.module.scss';
-import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import React from 'react'
+import styles from './app-header.module.scss'
+import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 
 interface AppHeaderProps {
 
@@ -45,7 +45,7 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
 
             </div>
         </header>
-    );
-};
+    )
+}
 
-export default AppHeader;
+export default AppHeader

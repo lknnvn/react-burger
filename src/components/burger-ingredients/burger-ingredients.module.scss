@@ -3,10 +3,9 @@
 }
 
 .listWrap{
-  /*height: calc(100% - 40px);
-  position: relative;
+  height: 664px;
   overflow: auto;
-  scrollbar-width: thin;*/
+  scrollbar-width: thin;
 }
 
 .list {
@@ -21,6 +20,7 @@
   position: relative;
   composes: pl-4 pr-4 from global;
   text-align: center;
+  cursor: pointer;
 }
 
 .ingredientPrice{
