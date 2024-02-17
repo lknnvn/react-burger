@@ -1,12 +1,19 @@
 import React from 'react'
 import styles from './ingredient-details.module.scss'
-import Ingredient from "../../interfaces/ingredient"
+import {useSelector} from "react-redux"
+import {InitialState} from "../../services/initialState"
 
 interface IngredientDetailsProps {
-    ingredient: Ingredient
+
 }
 
-const IngredientDetails: React.FC<IngredientDetailsProps> = ({ ingredient }) => {
+const IngredientDetails: React.FC<IngredientDetailsProps> = () => {
+
+    const ingredient = useSelector((state: InitialState) => state.ingredientDetails)
+
+    if (!ingredient) {
+        return <div>Загрузка...</div>
+    }
 
     return (
         <div className={styles.wrap}>

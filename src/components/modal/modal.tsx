@@ -15,18 +15,18 @@ const Modal: React.FC<ModalProps> = ({title,  onClose, children}) => {
     const handleEscPress = useCallback(
         (e: any) => {
             if (e.key === 'Escape') {
-                onClose();
+                onClose()
             }
         },
         [onClose]
-    );
+    )
 
     useEffect(() => {
         document.addEventListener('keydown', handleEscPress)
 
         return () => {
             document.removeEventListener('keydown', handleEscPress)
-        };
+        }
     }, [handleEscPress])
 
     return ReactDOM.createPortal(
