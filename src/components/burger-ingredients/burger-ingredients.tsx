@@ -64,12 +64,13 @@ const BurgerIngredients: React.FC = () => {
         if (inViewThree) setCurrent('three')
     }, [inViewOne, inViewTwo, inViewThree])
 
-    const selectedIngredients = useSelector((state: InitialState) => state.selectedIngredients.list)
+    const selectedFilling = useSelector((state: InitialState) => state.selectedIngredients.list)
+    const selectedBun = useSelector((state: InitialState) => state.selectedIngredients.bun)
 
-    const counts = useMemo(() => {
+    const selectedFillingCounts = useMemo(() => {
         const ingredientCounts: { [key: string]: number } = {}
 
-        selectedIngredients.forEach((ingredient) => {
+        selectedFilling.forEach((ingredient) => {
             const id = ingredient._id
             if (ingredientCounts[id]) {
                 ingredientCounts[id]++
@@ -79,7 +80,15 @@ const BurgerIngredients: React.FC = () => {
         })
 
         return ingredientCounts
-    }, [selectedIngredients])
+    }, [selectedFilling])
+
+    const selectedBunCounts = useMemo(() => {
+        const counts: { [key: string]: number } = {};
+        if (selectedBun) {
+            counts[selectedBun._id] = 2;
+        }
+        return counts;
+    }, [selectedBun]);
 
     return (
         <>
@@ -107,21 +116,21 @@ const BurgerIngredients: React.FC = () => {
                 <h2 className={'text text_type_main-medium mb-6'}>Булки</h2>
                 <ul ref={refOne} className={styles.list}>
                     {buns.map((bun) => (
-                        <BurgerIngredient key={bun._id} count={counts[bun._id]} ingredient={bun} handleClick={handleIngredientClick}/>
+                        <BurgerIngredient key={bun._id} count={selectedBunCounts[bun._id]} ingredient={bun} handleClick={handleIngredientClick}/>
                     ))}
                 </ul>
 
                 <h2 className={styles.h2}>Соусы</h2>
                 <ul ref={refTwo} className={styles.list}>
                     {sauces.map((sauce) => (
-                        <BurgerIngredient key={sauce._id} count={counts[sauce._id]} ingredient={sauce} handleClick={handleIngredientClick}/>
+                        <BurgerIngredient key={sauce._id} count={selectedFillingCounts[sauce._id]} ingredient={sauce} handleClick={handleIngredientClick}/>
                     ))}
                 </ul>
 
                 <h2 className={'text text_type_main-medium mb-6'}>Начинки</h2>
                 <ul ref={refThree} className={styles.list}>
                     {mains.map((main) => (
-                        <BurgerIngredient key={main._id} count={counts[main._id]} ingredient={main} handleClick={handleIngredientClick}/>
+                        <BurgerIngredient key={main._id} count={selectedFillingCounts[main._id]} ingredient={main} handleClick={handleIngredientClick}/>
                     ))}
                 </ul>
             </div>

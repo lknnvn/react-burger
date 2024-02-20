@@ -1,3 +1,4 @@
+// src/components/burger-constructor-ingredient/burger-constructor-ingredient.tsx
 import React, {useRef} from 'react'
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
 import {useDispatch} from 'react-redux'
@@ -7,6 +8,8 @@ import {
 } from '../../services/actions/selectedIngredientsActions'
 import Ingredient from "../../interfaces/ingredient"
 import {DropTargetHookSpec, useDrag, useDrop} from "react-dnd"
+import styles from './burger-constructor-ingredient.module.scss'
+import GrabIcon from "./grab-icon";
 
 interface ConstructorElementProps {
     ingredient: Ingredient
@@ -24,10 +27,10 @@ const BurgerConstructorIngredient: React.FC<ConstructorElementProps> = ({ingredi
         dispatch(removeConstructorIngredient(index))
     }
 
-    const [{ isDragging }, drag] = useDrag({
+    const [{isDragging}, drag] = useDrag({
         type: ItemTypes.INGREDIENT,
         item: () => {
-           return { ingredient, index }
+            return {ingredient, index}
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -36,7 +39,7 @@ const BurgerConstructorIngredient: React.FC<ConstructorElementProps> = ({ingredi
 
     const dropSpec: DropTargetHookSpec<{ ingredient: Ingredient; index: number; }, any, any> = {
         accept: ItemTypes.INGREDIENT,
-        collect(monitor){
+        collect(monitor) {
             return {
                 handlerId: monitor.getHandlerId()
             }
@@ -82,7 +85,13 @@ const BurgerConstructorIngredient: React.FC<ConstructorElementProps> = ({ingredi
     drag(drop(ref))
 
     return (
-        <div ref={ref} data-handler-id={handlerId} style={{ opacity: isDragging ? 0.5 : 1 }}>
+        <div
+            ref={ref}
+            data-handler-id={handlerId}
+            className={styles.ingredient}
+            style={{opacity: isDragging ? 0.5 : 1}}
+        >
+            <GrabIcon />
             <ConstructorElement
                 text={ingredient.name}
                 price={ingredient.price}

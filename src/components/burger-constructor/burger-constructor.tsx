@@ -1,3 +1,4 @@
+// src/components/burger-constructor/burger-constructor.tsx
 import React, {useEffect, useState} from 'react'
 import styles from './burger-constructor.module.scss'
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
@@ -15,28 +16,27 @@ import {
 import {InitialState} from "../../services/initialState"
 import {useDrop} from "react-dnd"
 import calculateTotalPrice from "../../utils/calculateTotalPrice"
-import BurgerConstructorIngredient from "../burger-constructor-ingredient/burger-constructor-ingredient"
+import BurgerConstructorIngredient from "../burger-constructor-ingredient"
 
 
 const BurgerConstructor: React.FC = () => {
 
-    const { isOpen, openModal, closeModal } = useModal()
-    const selectedIngredients = useSelector((state: InitialState) => state.selectedIngredients.list)
+    const {isOpen, openModal, closeModal} = useModal()
+
+    const filling = useSelector((state: InitialState) => state.selectedIngredients.list)
     const bun = useSelector((state: InitialState) => state.selectedIngredients.bun)
 
-    const selectedOther = selectedIngredients.filter((item) => item.type !== 'bun')
-
     const [totalPrice, setTotalPrice] = useState(0)
+
     useEffect(() => {
-        console.log(11, selectedIngredients)
-        setTotalPrice(calculateTotalPrice(selectedIngredients))
-    }, [selectedIngredients])
+        setTotalPrice(calculateTotalPrice(bun, filling))
+    }, [bun, filling])
 
     const dispatch = useDispatch()
 
     const handleOrderClick = async () => {
         try {
-            const ingredientIds = selectedIngredients.map(ingredient => ingredient._id)
+            const ingredientIds = filling.map(ingredient => ingredient._id)
             dispatch(fetchOrderDetails(ingredientIds) as unknown as Action<string>)
             openModal()
         } catch (error: any) {
@@ -59,37 +59,37 @@ const BurgerConstructor: React.FC = () => {
         <>
             {isOpen && (
                 <Modal onClose={closeModal}>
-                    <OrderDetails />
+                    <OrderDetails/>
                 </Modal>
             )}
 
             <div ref={drop} className={styles.list}>
 
-                {bun && <ConstructorElement
+                {bun ? <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${bun.name} (верх)`}
                     price={bun.price}
                     thumbnail={bun.image}
-                />}
+                /> : <div className={`${styles.noIngredient} ${styles.noIngredientBunTop}`}/>}
 
                 <div className={styles.listOther}>
-                    {selectedOther.map((item, i) => (
+                {filling.length !== 0 ? filling.map((item, i) => (
                         <BurgerConstructorIngredient
                             key={item.id}
                             ingredient={item}
                             index={i}
                         />
-                    ))}
+                    )) : <div className={styles.noIngredient}/>}
                 </div>
 
-                {bun && <ConstructorElement
+                {bun ? <ConstructorElement
                     type="bottom"
                     isLocked={true}
                     text={`${bun.name} (низ)`}
                     price={bun.price}
                     thumbnail={bun.image}
-                />}
+                /> : <div className={`${styles.noIngredient} ${styles.noIngredientBunBottom}`}/>}
 
             </div>
 

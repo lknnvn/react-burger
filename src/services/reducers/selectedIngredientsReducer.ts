@@ -15,26 +15,20 @@ interface SelectedIngredientsAction extends Action {
 const selectedIngredientsReducer = (state = rootState.selectedIngredients, action: SelectedIngredientsAction): InitialState["selectedIngredients"] => {
     switch (action.type) {
         case ADD_CONSTRUCTOR_INGREDIENT:
-            if (action.payload.type === "bun"){
-                return {
-                    ...state,
-                    bun: action.payload
-                }
-            }
             return {
                 ...state,
-                list: [...state.list, action.payload],
-            };
+                bun: action.payload.type === "bun" ? action.payload : state.bun,
+                list: action.payload.type !== "bun" ? [...state.list, action.payload] : state.list,
+            }
         case REMOVE_CONSTRUCTOR_INGREDIENT:
             return {
                 ...state, //
                 list: [...state.list].slice(0, action.payload).concat([...state.list].slice(action.payload + 1))
             };
         case REPLACE_CONSTRUCTOR_BUNS:
-            const newIngredients = state.list.filter(ingredient => ingredient.type !== 'bun');
             return {
                 ...state,
-                list: [...newIngredients, action.payload],
+                bun: action.payload,
             };
         case SORT_CONSTRUCTOR_INGREDIENTS:
             const {dragIndex, hoverIndex} = action.payload;

@@ -2,12 +2,13 @@
   composes: mb-10 pl-8 from global;
   display: grid;
   gap: 10px;
+  position: relative;
 }
 
 .listOther {
   display: grid;
   gap: 10px;
-  height: 464px;
+  max-height: 464px;
   overflow: auto;
   scrollbar-width: thin;
 }
@@ -26,5 +27,20 @@
   svg {
     width: 36px;
     height: 36px;
+  }
+}
+
+.noIngredient {
+  composes: constructor-element from global;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &BunTop{
+    composes: constructor-element_pos_top from global;
+  }
+
+  &BunBottom  {
+    composes: constructor-element_pos_bottom from global;
   }
 }

@@ -3,6 +3,9 @@ import { ThunkAction } from 'redux-thunk';
 import { InitialState } from '../initialState';
 import { Action } from 'redux';
 import { LOAD_ORDER_DETAILS_REQUEST, LOAD_ORDER_DETAILS_SUCCESS, LOAD_ORDER_DETAILS_FAILURE } from './types';
+import fetchData from "../../utils/fetchData";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const loadOrderDetailsRequest = () => {
     return {
@@ -27,21 +30,16 @@ export const loadOrderDetailsFailure = (error: Error) => {
 export const fetchOrderDetails = (ingredientIds: string[]): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
     dispatch(loadOrderDetailsRequest());
     try {
-        const response = await fetch('https://norma.nomoreparties.space/api/orders', {
+        const {data} = await fetchData(`${BASE_URL}/orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ ingredients: ingredientIds })
-        })
+        });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch order number');
-        }
-
-        const data = await response.json();
         dispatch(loadOrderDetailsSuccess(data));
     } catch (error: any) {
-        dispatch(loadOrderDetailsFailure(error));
+        dispatch(loadOrderDetailsFailure(error.message));
     }
 };

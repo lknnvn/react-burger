@@ -25,10 +25,10 @@ export const removeConstructorIngredient = (index: number) => {
     };
 };
 
-export const replaceConstructorBuns = (ingredient: Ingredient) => {
+export const replaceConstructorBuns = (bun: Ingredient) => {
     return {
         type: REPLACE_CONSTRUCTOR_BUNS,
-        payload: ingredient,
+        payload: bun,
     };
 };
 
