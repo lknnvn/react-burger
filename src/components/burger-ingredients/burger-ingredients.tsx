@@ -1,35 +1,100 @@
-import React, {useState} from 'react'
-import styles from './burger-ingredients.module.scss'
+import React, {useEffect, useMemo, useState} from 'react'
 import {Counter, CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components"
 import Modal from "../modal"
 import IngredientDetails from "../ingredient-details"
 import Ingredient from "../../interfaces/ingredient"
 import useModal from "../../hooks/useModal"
+import styles from './burger-ingredients.module.scss'
+import {InitialState} from '../../services/initialState'
+import {useDispatch, useSelector} from 'react-redux'
+import {setCurrentIngredient} from '../../services/actions/ingredientDetailsActions'
+import {useInView} from 'react-intersection-observer'
+import {useDrag} from 'react-dnd'
 
-interface BurgerIngredientsProps {
-    ingredientsData: Ingredient[]
+interface BurgerIngredientProps {
+    ingredient: Ingredient
+    handleClick: (ingredient: Ingredient) => void
+    count: number
 }
 
-const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({ingredientsData}) => {
+const BurgerIngredient: React.FC<BurgerIngredientProps> = ({ingredient, handleClick, count}) => {
+    const [, drag] = useDrag({
+        type: 'INGREDIENT',
+        item: { ingredient },
+    })
 
-    const { isOpen, openModal, closeModal } = useModal()
-    const [current, setCurrent] = React.useState('one')
-    const [selectedIngredient, setSelectedIngredient] = useState<Ingredient | null>(null)
+    return (
+        <li
+            ref={drag}
+            className={styles.ingredient}
+            onClick={() => handleClick(ingredient)}
+        >
+            { count > 0 && <Counter count={count} size="default" extraClass="m-1"/>}
+            <img src={ingredient.image} alt={ingredient.name} className="mb-1"/>
+            <p className={styles.ingredientPrice}>
+                {ingredient.price} <CurrencyIcon type="primary"/>
+            </p>
+            <p className="text text_type_main-default">{ingredient.name}</p>
+        </li>
+    )
+}
+
+const BurgerIngredients: React.FC = () => {
+    const {isOpen, openModal, closeModal} = useModal()
+    const [current, setCurrent] = useState('one')
+    const ingredientsData = useSelector((state: InitialState) => state.ingredients.list)
 
     const buns = ingredientsData.filter((ingredient) => ingredient.type === 'bun')
     const sauces = ingredientsData.filter((ingredient) => ingredient.type === 'sauce')
     const mains = ingredientsData.filter((ingredient) => ingredient.type === 'main')
 
+    const dispatch = useDispatch()
     const handleIngredientClick = (ingredient: Ingredient) => {
-        setSelectedIngredient(ingredient)
+        dispatch(setCurrentIngredient(ingredient))
         openModal()
     }
 
+    const [refOne, inViewOne] = useInView({threshold: 0})
+    const [refTwo, inViewTwo] = useInView({threshold: 1})
+    const [refThree, inViewThree] = useInView({threshold: 0.5})
+
+    useEffect(() => {
+        if (inViewOne) setCurrent('one')
+        if (inViewTwo) setCurrent('two')
+        if (inViewThree) setCurrent('three')
+    }, [inViewOne, inViewTwo, inViewThree])
+
+    const selectedFilling = useSelector((state: InitialState) => state.selectedIngredients.list)
+    const selectedBun = useSelector((state: InitialState) => state.selectedIngredients.bun)
+
+    const selectedFillingCounts = useMemo(() => {
+        const ingredientCounts: { [key: string]: number } = {}
+
+        selectedFilling.forEach((ingredient) => {
+            const id = ingredient._id
+            if (ingredientCounts[id]) {
+                ingredientCounts[id]++
+            } else {
+                ingredientCounts[id] = 1
+            }
+        })
+
+        return ingredientCounts
+    }, [selectedFilling])
+
+    const selectedBunCounts = useMemo(() => {
+        const counts: { [key: string]: number } = {};
+        if (selectedBun) {
+            counts[selectedBun._id] = 2;
+        }
+        return counts;
+    }, [selectedBun]);
+
     return (
         <>
-            {isOpen  && (
+            {isOpen && (
                 <Modal title={"Детали ингредиента"} onClose={closeModal}>
-                    <IngredientDetails ingredient={selectedIngredient as Ingredient}/>
+                    <IngredientDetails/>
                 </Modal>
             )}
 
@@ -49,57 +114,26 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({ingredientsData}) 
 
             <div className={styles.listWrap}>
                 <h2 className={'text text_type_main-medium mb-6'}>Булки</h2>
-                <ul className={styles.list}>
+                <ul ref={refOne} className={styles.list}>
                     {buns.map((bun) => (
-                        <li key={bun._id}
-                            className={styles.ingredient}
-                            onClick={() => handleIngredientClick(bun)}
-                        >
-                            <Counter count={1} size="default" extraClass="m-1"/>
-                            <img src={bun.image} alt={bun.name} className="mb-1"/>
-                            <p className={styles.ingredientPrice}>
-                                {bun.price} <CurrencyIcon type="primary"/>
-                            </p>
-                            <p className="text text_type_main-default">{bun.name}</p>
-                        </li>
+                        <BurgerIngredient key={bun._id} count={selectedBunCounts[bun._id]} ingredient={bun} handleClick={handleIngredientClick}/>
                     ))}
                 </ul>
 
                 <h2 className={styles.h2}>Соусы</h2>
-                <ul className={styles.list}>
+                <ul ref={refTwo} className={styles.list}>
                     {sauces.map((sauce) => (
-                        <li key={sauce._id}
-                            className={styles.ingredient}
-                            onClick={() => handleIngredientClick(sauce)}
-                        >
-                            <Counter count={1} size="default" extraClass="m-1"/>
-                            <img src={sauce.image} alt={sauce.name} className="mb-1"/>
-                            <p className={styles.ingredientPrice}>
-                                {sauce.price} <CurrencyIcon type="primary"/>
-                            </p>
-                            <p className="text text_type_main-default">{sauce.name}</p>
-                        </li>
+                        <BurgerIngredient key={sauce._id} count={selectedFillingCounts[sauce._id]} ingredient={sauce} handleClick={handleIngredientClick}/>
                     ))}
                 </ul>
 
                 <h2 className={'text text_type_main-medium mb-6'}>Начинки</h2>
-                <ul className={styles.list}>
+                <ul ref={refThree} className={styles.list}>
                     {mains.map((main) => (
-                        <li key={main._id}
-                            className={styles.ingredient}
-                            onClick={() => handleIngredientClick(main)}
-                        >
-                            <Counter count={1} size="default" extraClass="m-1"/>
-                            <img src={main.image} alt={main.name} className="mb-1"/>
-                            <p className={styles.ingredientPrice}>
-                                {main.price} <CurrencyIcon type="primary"/>
-                            </p>
-                            <p className="text text_type_main-default">{main.name}</p>
-                        </li>
+                        <BurgerIngredient key={main._id} count={selectedFillingCounts[main._id]} ingredient={main} handleClick={handleIngredientClick}/>
                     ))}
                 </ul>
             </div>
-
         </>
     )
 }

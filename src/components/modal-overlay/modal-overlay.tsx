@@ -11,7 +11,7 @@ const ModalOverlay: React.FC<ModalOverlayProps> = ({ onClose, children }) => {
         <div className={styles.modalOverlay} onClick={onClose}>
             {children}
         </div>
-    );
-};
+    )
+}
 
 export default ModalOverlay

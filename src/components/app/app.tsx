@@ -1,49 +1,29 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { fetchIngredients } from '../../services/actions/ingredientsActions'
+import AppHeader from '../app-header'
+import BurgerIngredients from '../burger-ingredients'
+import BurgerConstructor from '../burger-constructor'
 import styles from './app.module.scss'
-import AppHeader from "../app-header"
-import BurgerIngredients from "../burger-ingredients"
-import BurgerConstructor from "../burger-constructor"
-import selectedIngredients from "../../utils/selectedIngredients";
-
-const API_URL = 'https://norma.nomoreparties.space/api/ingredients'
+import {Action} from "redux"
 
 function App() {
-    const [ingredientsData, setIngredientsData] = useState([])
+    const dispatch = useDispatch()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(API_URL)
-
-                if (!response.ok) {
-                    throw new Error('Ошибка при загрузке данных')
-                }
-
-                const data = await response.json()
-                setIngredientsData(data.data)
-            } catch (error: any) {
-                console.error('Ошибка при запросе к API:', error.message)
-            }
-        }
-
-        fetchData().catch((error) => {
-            console.error('Произошла ошибка:', error)
-        })
-    }, [])
+    React.useEffect(() => {
+        dispatch(fetchIngredients() as unknown as Action<string>)
+    }, [dispatch])
 
     return (
         <>
-            <AppHeader/>
+            <AppHeader />
             <main className={styles.main}>
-
                 <div className={styles.burgerIngredients}>
-                    <BurgerIngredients ingredientsData={ingredientsData}/>
+                    <BurgerIngredients />
                 </div>
-
                 <div className={styles.burgerConstructor}>
-                    <BurgerConstructor selectedIngredients={selectedIngredients}/>
+                    <BurgerConstructor />
                 </div>
-
             </main>
         </>
     )

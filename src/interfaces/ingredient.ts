@@ -1,3 +1,4 @@
+// src/interfaces/ingredient.ts
 interface Ingredient {
     _id: string
     name: string
@@ -11,6 +12,7 @@ interface Ingredient {
     image_mobile: string
     image_large: string
     __v: number
+    id: string
 }
 
 export default Ingredient
