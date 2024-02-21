@@ -30,7 +30,7 @@ export const loadOrderDetailsFailure = (error: Error) => {
 export const fetchOrderDetails = (ingredientIds: string[]): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
     dispatch(loadOrderDetailsRequest());
     try {
-        const {data} = await fetchData(`${BASE_URL}/orders`, {
+        const data = await fetchData(`${BASE_URL}/orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
