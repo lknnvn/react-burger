@@ -12,7 +12,7 @@ const IngredientDetails: React.FC<IngredientDetailsProps> = () => {
     const ingredient = useSelector((state: InitialState) => state.ingredientDetails)
 
     if (!ingredient) {
-        return <div>Загрузка...</div>
+        return <div className={styles.loadText}>Загрузка...</div>
     }
 
     return (

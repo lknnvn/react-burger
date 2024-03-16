@@ -1,0 +1,51 @@
+@import "variables";
+
+.container {
+  width: 100%;
+  max-width: 1272px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.form {
+  width: 480px;
+  height: max-content;
+  display: grid;
+  gap: 24px;
+  justify-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.formTitle {
+  composes: text text_type_main-default from global;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin: unset;
+}
+
+.formSubmit {
+  width: max-content;
+  height: max-content;
+}
+
+.formLinks {
+  composes: text text_type_main-default text_color_inactive mt-20 from global;
+  height: max-content;
+  align-self: end;
+  text-align: center;
+
+  a {
+    color: #4C4CFF;
+    text-decoration: none;
+  }
+}
+
+.errorAuth {
+  color: red;
+}

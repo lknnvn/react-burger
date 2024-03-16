@@ -16,6 +16,7 @@
     align-items: center;
     list-style-type: none;
     padding-left: unset;
+    margin: unset;
 
     li{
       &:last-child{
@@ -35,6 +36,10 @@
 
   &Active {
     color: var(--text-primary-color);
+
+    svg {
+      fill: var(--text-primary-color);
+    }
   }
 
   &:hover {

@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({title,  onClose, children}) => {
                     <div className={`${styles.header} ${!title && styles.headerWithTitle}`}
                          style={{justifyContent: title ? "space-between" : "flex-end"}}>
                         {title && <span className={styles.title}>{title}</span>}
-                        <CloseIcon type="primary" onClick={onClose}/>
+                        <div className={styles.closeIcon}><CloseIcon  type="primary" onClick={onClose}/></div>
                     </div>
                     {children}
                 </div>
