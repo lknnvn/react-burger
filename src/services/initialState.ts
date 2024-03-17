@@ -31,7 +31,6 @@ export interface InitialState {
     };
     auth: {
         data: Auth | null
-        isAuthenticated: boolean
         isForgotPasswordVisited: boolean
         error: any
     };
@@ -72,7 +71,6 @@ const rootState: InitialState = {
     },
     auth: {
         data: null,
-        isAuthenticated: false,
         isForgotPasswordVisited: false,
         error: null
     },

@@ -22,10 +22,10 @@ interface AuthAction extends Action {
 const authReducer = (state = rootState.auth, action: AuthAction): InitialState["auth"] => {
     switch (action.type) {
         case SIGN_IN_SUCCESS:
+            localStorage.setItem('isAuthenticated', 'true');
             return {
                 ...state,
                 data: action.payload,
-                isAuthenticated: true,
                 error: null,
             };
         case SIGN_IN_FAILURE:
@@ -35,10 +35,10 @@ const authReducer = (state = rootState.auth, action: AuthAction): InitialState["
                 error: action.payload
             };
         case SIGN_OUT_SUCCESS:
+            localStorage.removeItem('isAuthenticated');
             return {
                 ...state,
                 data: null,
-                isAuthenticated: false,
                 isForgotPasswordVisited: false,
                 error: null,
             };
@@ -48,10 +48,10 @@ const authReducer = (state = rootState.auth, action: AuthAction): InitialState["
                 error: action.payload,
             };
         case SIGN_UP_SUCCESS:
+            localStorage.setItem('isAuthenticated', 'true');
             return {
                 ...state,
                 data: action.payload,
-                isAuthenticated: true,
                 error: null,
             };
         case SIGN_UP_FAILURE:

@@ -1,6 +1,6 @@
 // src/components/app/app.tsx
 import React from 'react'
-import {BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import {BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from "../../pages/home";
 import RegisterPage from "../../pages/register";
 import AppHeader from "../app-header";
@@ -26,9 +26,9 @@ function App() {
             <AppHeader/>
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/register" element={<RegisterPage/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
+                <Route path="/register" element={<ProtectedRouteElement element={<RegisterPage />} />}/>
+                <Route path="/login" element={<ProtectedRouteElement element={<Login />} />}/>
+                <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} />}/>
                 <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />}/>
                 <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} />}/>
                 <Route path="/ingredients/:id" element={<IngredientDetailsPage/>}/>

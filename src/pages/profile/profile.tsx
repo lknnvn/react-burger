@@ -1,27 +1,23 @@
 import React, {useEffect, useState} from "react";
 import styles from "./profile.module.scss";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
-import fetchData from "../../utils/fetchData";
-import Cookies from 'js-cookie';
-import SignIn from "../../interfaces/signIn";
-import SignUp from "../../interfaces/signUp";
+import {Link, useNavigate} from "react-router-dom";
 import {signOutRequest} from "../../services/actions/authAction";
 import {useDispatch, useSelector} from "react-redux";
 import {Action} from "redux";
-import {refreshAccessToken} from "../../services/actions/tokenAction";
 import {getUser, updateUser} from "../../services/actions/profileAction";
 import {InitialState} from "../../services/initialState";
 import User from "../../interfaces/user";
 
 const ProfilePage: React.FC = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const userData = useSelector((state: InitialState) => state.user.data);
 
     useEffect(() => {
         dispatch(getUser() as unknown as Action<string>);
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         setUser(userData);
@@ -48,8 +44,6 @@ const ProfilePage: React.FC = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({...user, [e.target.name]: e.target.value});
-        /*const { name, value } = e.target;
-        setInitialUser((prevUser) => ({ ...prevUser, [name]: value }));*/
         setIsEditing(true);
     };
 
@@ -63,11 +57,11 @@ const ProfilePage: React.FC = () => {
 
     const handleSignOut = () => {
         dispatch(signOutRequest() as unknown as Action<string>);
+        navigate("/");
     };
 
     return (
         <main className={styles.main}>
-
             <nav className={styles.nav}>
                 <Link className={styles.navLink + ' ' + styles.navLinkActive} to={'/profile'}>Профиль</Link>
                 <Link className={styles.navLink} to={'/profile/orders'}>История заказов</Link>
