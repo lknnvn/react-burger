@@ -18,7 +18,7 @@ const RegisterPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(clearError());
-    }, []);
+    }, [dispatch]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

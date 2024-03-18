@@ -10,7 +10,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentIngredient} from '../../services/actions/ingredientDetailsActions'
 import {useInView} from 'react-intersection-observer'
 import {useDrag} from 'react-dnd'
-import {useLocation, useNavigate} from "react-router-dom";
 
 interface BurgerIngredientProps {
     ingredient: Ingredient

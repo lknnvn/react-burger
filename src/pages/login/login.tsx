@@ -1,7 +1,7 @@
 // src/pages/login/login.tsx
 import React, {useEffect, useState} from "react";
 import styles from "./login.module.scss";
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {clearError, signInRequest} from "../../services/actions/authAction";
@@ -18,7 +18,7 @@ const LoginPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(clearError());
-    }, []);
+    }, [dispatch]);
 
     const handleSubmit = async  (e: React.FormEvent) => {
         e.preventDefault();
