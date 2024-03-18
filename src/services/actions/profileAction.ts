@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import {refreshAccessToken} from "./tokenAction";
 import User from "../../interfaces/user";
 
-export const getUserSuccess = (user: any) => ({
+export const getUserSuccess = (user: User) => ({
     type: 'GET_USER_SUCCESS',
     payload: user
 });
@@ -59,7 +59,7 @@ export const getUser = (): ThunkAction<void, InitialState, unknown, Action<strin
 };
 
 
-export const updateUserSuccess = (user: any) => ({
+export const updateUserSuccess = (user: User) => ({
     type: 'UPDATE_USER_SUCCESS',
     payload: user
 });
