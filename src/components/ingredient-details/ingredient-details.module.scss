@@ -19,3 +19,8 @@
   display: grid;
   gap: 8px;
 }
+
+.loadText{
+  composes: text text_type_main-medium mt-10 from global;
+  text-align: center;
+}

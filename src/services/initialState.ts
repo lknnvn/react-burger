@@ -1,5 +1,7 @@
 // src/services/initialState.ts
 import Ingredient from '../interfaces/ingredient';
+import Auth from "../interfaces/auth";
+import User from "../interfaces/user";
 
 export interface InitialState {
     ingredients: {
@@ -22,6 +24,24 @@ export interface InitialState {
         loading: boolean;
         error: any;
     };
+    user: {
+        data: User
+        loading: boolean
+        error: null
+    };
+    auth: {
+        data: Auth | null
+        isForgotPasswordVisited: boolean
+        error: any
+    };
+    token: {
+        data: {
+            accessToken: string;
+            refreshToken: string;
+            success: boolean;
+        } | null;
+        error: any
+    };
 }
 
 const rootState: InitialState = {
@@ -38,6 +58,24 @@ const rootState: InitialState = {
     orderDetails: {
         data: null,
         loading: false,
+        error: null
+    },
+    user: {
+        data: {
+            name: '',
+            email: '',
+            password: ''
+        },
+        loading: true,
+        error: null
+    },
+    auth: {
+        data: null,
+        isForgotPasswordVisited: false,
+        error: null
+    },
+    token: {
+        data: null,
         error: null
     }
 };

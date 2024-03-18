@@ -1,0 +1,48 @@
+.main{
+  composes: container from global;
+  display: flex;
+  padding-top: 120px;
+}
+
+.nav {
+  composes: mr-15 from global;
+  display: flex;
+  flex-direction: column;
+}
+
+.navLink{
+  composes: text text_type_main-default text_color_inactive from global;
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 14px 0;
+  border: unset;
+  background: unset;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover{
+    color: #fff;
+  }
+}
+
+.navLinkActive{
+  color: #fff;
+}
+
+.pageDescription{
+  composes: text text_type_main-default text_color_inactive mt-20 from global;
+  opacity: 40%;
+}
+
+.buttonSubmit{
+  composes: text text_type_main-default from global;
+  padding: 10px 20px;
+}
+
+.buttonReset {
+  composes: text text_type_main-default mr-6 from global;
+  padding: 10px 20px;
+  color: #fff;
+  background: unset;
+}

@@ -1,58 +1,56 @@
-import React from 'react'
-import styles from './app-header.module.scss'
-import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components"
+import React from 'react';
+import styles from './app-header.module.scss';
+import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink } from "react-router-dom";
 
-interface AppHeaderProps {
-
-}
+interface AppHeaderProps {}
 
 const AppHeader: React.FC<AppHeaderProps> = () => {
+    const isActiveLink = (isActive: boolean) => isActive ? `${styles.link} ${styles.linkActive}` : `${styles.link}`;
 
     return (
         <header className={styles.header}>
             <nav className={styles.nav}>
-
                 <ul>
                     <li>
-                        <a
-                            href="/constructor"
-                            className={`${styles.link} ${styles.linkActive} mr-2`}
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) => isActiveLink(isActive) + " mr-2"}
                         >
-                            <BurgerIcon type='primary'/>
+                            <BurgerIcon type='secondary' />
                             <span className="pl-2">Конструктор</span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
-                        <a
-                            href="/order-list"
-                            className={styles.link}
+                        <NavLink
+                            to="/order-list"
+                            className={({ isActive }) => isActiveLink(isActive)}
                         >
-                            <ListIcon type='secondary'/>
+                            <ListIcon type='secondary' />
                             <span className="pl-2">Лента заказов</span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
-                        <a
-                            href="/"
+                        <NavLink
+                            to="/"
                             className={styles.logo}
                         >
-                            <Logo/>
-                        </a>
+                            <Logo />
+                        </NavLink>
                     </li>
                     <li>
-                        <a
-                            href="/user"
-                            className={styles.link}
+                        <NavLink
+                            to="/profile"
+                            className={({ isActive }) => isActiveLink(isActive)}
                         >
-                            <ProfileIcon type='secondary'/>
+                            <ProfileIcon type='secondary' />
                             <span className="pl-2">Личный кабинет</span>
-                        </a>
+                        </NavLink>
                     </li>
                 </ul>
-
             </nav>
         </header>
-    )
-}
+    );
+};
 
-export default AppHeader
+export default AppHeader;

@@ -1,8 +1,8 @@
 // src/utils/request.ts
 function checkResponse(response: Response) {
-    if (!response.ok) {
+    /*if (!response.ok) {
         throw new Error('Failed to fetch data');
-    }
+    }*/
     return response.json();
 }
 
