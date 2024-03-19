@@ -46,7 +46,7 @@ const BurgerConstructor: React.FC = () => {
 
     const [, drop] = useDrop({
         accept: 'INGREDIENT',
-        drop: (item: any) => {
+        drop: (item: { ingredient: Ingredient }) => {
             const ingredient: Ingredient = item.ingredient
             if (ingredient.type === 'bun') {
                 dispatch(replaceConstructorBuns(ingredient))

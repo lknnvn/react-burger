@@ -1,5 +1,5 @@
 // src/pages/register/register.tsx
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import styles from "./register.module.scss";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
@@ -20,7 +20,7 @@ const RegisterPage: React.FC = () => {
         dispatch(clearError());
     }, [dispatch]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await dispatch(signUpRequest(registerData, () => {
             navigate("/profile");
@@ -36,7 +36,7 @@ const RegisterPage: React.FC = () => {
                     <Input
                         type={'text'}
                         placeholder={'Имя'}
-                        onChange={(e) => setRegisterData({...registerData, name: e.target.value || ''})}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setRegisterData({...registerData, name: e.target.value || ''})}
                         value={registerData.name}
                         name={'name'}
                         error={false}
@@ -44,13 +44,13 @@ const RegisterPage: React.FC = () => {
                         extraClass="ml-1"
                     />
                     <EmailInput
-                        onChange={(e) => setRegisterData({...registerData, email: e.target.value})}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setRegisterData({...registerData, email: e.target.value})}
                         value={registerData.email}
                         name={'email'}
                         isIcon={false}
                     />
                     <PasswordInput
-                        onChange={(e) => setRegisterData({...registerData, password: e.target.value})}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setRegisterData({...registerData, password: e.target.value})}
                         value={registerData.password}
                         name={'password'}
                         extraClass="mb-2"
