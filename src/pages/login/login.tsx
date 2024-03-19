@@ -1,7 +1,7 @@
 // src/pages/login/login.tsx
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import styles from "./login.module.scss";
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {clearError, signInRequest} from "../../services/actions/authAction";
@@ -18,9 +18,9 @@ const LoginPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(clearError());
-    }, []);
+    }, [dispatch]);
 
-    const handleSubmit = async  (e: React.FormEvent) => {
+    const handleSubmit = async  (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await dispatch(signInRequest({ email, password }, () => {
             navigate("/");
@@ -33,13 +33,13 @@ const LoginPage: React.FC = () => {
                 <h1 className={styles.formTitle}>Вход</h1>
                 {error && <div className={styles.errorAuth}>{error}</div>}
                 <EmailInput
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     value={email}
                     name={'email'}
                     isIcon={false}
                 />
                 <PasswordInput
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                     value={password}
                     name={'password'}
                     extraClass="mb-2"
