@@ -1,6 +1,6 @@
 import rootState, { InitialState } from "../initialState";
 import { Action } from "redux";
-import {GET_USER_FAILURE, GET_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_SUCCESS} from "../actions/types";
+import {GET_USER_FAILURE, GET_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_SUCCESS} from "../types/actions";
 
 interface UserAction extends Action {
     payload: any;

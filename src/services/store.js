@@ -1,8 +1,25 @@
 // src/services/store.js
-import { createStore, applyMiddleware } from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './reducers/rootReducer';
 import {thunk} from "redux-thunk";
+import {socketMiddleware} from "./middleware";
+import {
+    WS_CONNECTION_CLOSED,
+    WS_CONNECTION_ERROR,
+    WS_CONNECTION_START,
+    WS_CONNECTION_SUCCESS, WS_GET_MESSAGE,
+} from "./types/actions";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(
+    rootReducer,
+    applyMiddleware(thunk, socketMiddleware({
+            WS_CONNECTION_START,
+            WS_CONNECTION_SUCCESS,
+            WS_CONNECTION_ERROR,
+            WS_CONNECTION_CLOSED,
+            WS_GET_MESSAGE
+        }
+    ))
+);
 
 export default store;

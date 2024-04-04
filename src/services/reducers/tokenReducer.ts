@@ -1,5 +1,5 @@
 import rootState, {InitialState} from "../initialState";
-import {REFRESH_TOKEN_FAILURE, REFRESH_TOKEN_SUCCESS,} from "../actions/types";
+import {REFRESH_TOKEN_FAILURE, REFRESH_TOKEN_SUCCESS,} from "../types/actions";
 import {Action} from "redux";
 
 interface TokenAction extends Action {

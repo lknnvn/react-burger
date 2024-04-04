@@ -8,9 +8,10 @@ interface ModalProps {
     title?: string
     onClose: () => void
     children: React.ReactNode
+    extraClass?: string
 }
 
-const Modal: React.FC<ModalProps> = ({title,  onClose, children}) => {
+const Modal: React.FC<ModalProps> = ({title,  onClose, children, extraClass= ''}) => {
 
     const handleEscPress = useCallback(
         (e: KeyboardEvent) => {
@@ -32,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({title,  onClose, children}) => {
     return ReactDOM.createPortal(
         <>
             <ModalOverlay onClose={onClose}>
-                <div className={`${styles.modal} ${title ? styles.withTitle : styles.withoutTitle}`}
+                <div className={`${styles.modal} ${extraClass}`}
                      onClick={(e) => e.stopPropagation()}>
                     <div className={`${styles.header} ${!title && styles.headerWithTitle}`}
                          style={{justifyContent: title ? "space-between" : "flex-end"}}>

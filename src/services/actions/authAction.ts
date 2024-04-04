@@ -6,7 +6,7 @@ import {
     SIGN_OUT_SUCCESS,
     SIGN_UP_FAILURE,
     SIGN_UP_SUCCESS
-} from "./types";
+} from "../types/actions";
 import fetchData from "../../utils/fetchData";
 import {ThunkAction} from "redux-thunk";
 import {InitialState} from "../initialState";

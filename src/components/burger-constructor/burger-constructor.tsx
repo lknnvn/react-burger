@@ -3,10 +3,10 @@ import React, {useEffect, useState} from 'react'
 import styles from './burger-constructor.module.scss'
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import Modal from "../modal"
-import OrderDetails from "../order-details"
+import OrderNotification from "../order-notification"
 import Ingredient from "../../interfaces/ingredient"
 import useModal from "../../hooks/useModal"
-import {fetchOrderDetails} from "../../services/actions/orderDetailsActions"
+import {fetchOrdeNotification} from "../../services/actions/orderNotificationActions"
 import {useDispatch, useSelector} from "react-redux"
 import {Action} from "redux"
 import {
@@ -29,7 +29,9 @@ const BurgerConstructor: React.FC = () => {
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
-        setTotalPrice(calculateTotalPrice(bun, filling))
+        if(filling && bun){
+            setTotalPrice(calculateTotalPrice([...filling, bun]))
+        }
     }, [bun, filling])
 
     const dispatch = useDispatch()
@@ -37,7 +39,9 @@ const BurgerConstructor: React.FC = () => {
     const handleOrderClick = async () => {
         try {
             const ingredientIds = filling.map(ingredient => ingredient._id)
-            dispatch(fetchOrderDetails(ingredientIds) as unknown as Action<string>)
+            const allIds = [bun?._id].concat(ingredientIds);
+
+            dispatch(fetchOrdeNotification(allIds) as unknown as Action<string>)
             openModal()
         } catch (error: any) {
             console.error('Failed to create order:', error.message)
@@ -58,8 +62,8 @@ const BurgerConstructor: React.FC = () => {
     return (
         <>
             {isOpen && (
-                <Modal onClose={closeModal}>
-                    <OrderDetails/>
+                <Modal onClose={closeModal} extraClass={'pt-15 pr-10 pb-30 pl-10'}>
+                    <OrderNotification/>
                 </Modal>
             )}
 

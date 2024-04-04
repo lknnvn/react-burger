@@ -100,7 +100,7 @@ const BurgerIngredients: React.FC = () => {
     return (
         <>
             {isOpen && (
-                <Modal title={"Детали ингредиента"} onClose={handleCloseModal}>
+                <Modal title={"Детали ингредиента"} onClose={handleCloseModal} extraClass={'pt-10 pr-10 pb-15 pl-10'}>
                     <IngredientDetails/>
                 </Modal>
             )}
