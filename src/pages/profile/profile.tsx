@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, ChangeEvent, FormEvent} from "react";
 import styles from "./profile.module.scss";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
@@ -29,7 +29,7 @@ const ProfilePage: React.FC = () => {
     const loading = useSelector((state: InitialState) => state.user.loading)
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await dispatch(updateUser(user) as unknown as Action<string>);
         setUser(userData);
@@ -42,7 +42,7 @@ const ProfilePage: React.FC = () => {
         setIsEditing(false);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUser({...user, [e.target.name]: e.target.value});
         setIsEditing(true);
     };

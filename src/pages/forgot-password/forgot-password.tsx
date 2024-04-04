@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import styles from "./forgot-password.module.scss";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
@@ -12,7 +12,7 @@ const ForgotPasswordPage: React.FC = () => {
     const navigate  = useNavigate();
     const dispatch = useDispatch();
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await dispatch(forgotPasswordRequest(email, () => {
             navigate('/reset-password');
@@ -27,7 +27,7 @@ const ForgotPasswordPage: React.FC = () => {
                 <Input
                     type={'text'}
                     placeholder={'Укажите e-mail'}
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     value={email}
                     name={'name'}
                     error={false}

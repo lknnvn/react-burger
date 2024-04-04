@@ -2,13 +2,11 @@ import {ThunkAction} from 'redux-thunk';
 import {Action} from 'redux';
 import fetchData from '../../utils/fetchData';
 import {InitialState} from "../initialState";
-import SignUp from "../../interfaces/signUp";
 import Cookies from "js-cookie";
 import {refreshAccessToken} from "./tokenAction";
-import {forgotPasswordFailure, forgotPasswordSuccess} from "./authAction";
 import User from "../../interfaces/user";
 
-export const getUserSuccess = (user: any) => ({
+export const getUserSuccess = (user: User) => ({
     type: 'GET_USER_SUCCESS',
     payload: user
 });
@@ -61,7 +59,7 @@ export const getUser = (): ThunkAction<void, InitialState, unknown, Action<strin
 };
 
 
-export const updateUserSuccess = (user: any) => ({
+export const updateUserSuccess = (user: User) => ({
     type: 'UPDATE_USER_SUCCESS',
     payload: user
 });

@@ -13,7 +13,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({title,  onClose, children}) => {
 
     const handleEscPress = useCallback(
-        (e: any) => {
+        (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 onClose()
             }

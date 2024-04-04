@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import styles from "./reset-password.module.scss";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
@@ -31,7 +31,7 @@ const ResetPasswordPage: React.FC = () => {
 
                 <PasswordInput
                     placeholder={'Введите новый пароль'}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                     value={password}
                     name={'password'}
                 />
@@ -39,7 +39,7 @@ const ResetPasswordPage: React.FC = () => {
                 <Input
                     type={'text'}
                     placeholder={'Введите код из письма'}
-                    onChange={e => setResetToken(e.target.value)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setResetToken(e.target.value)}
                     value={resetToken}
                     name={'resetToken'}
                     error={false}
