@@ -4,7 +4,7 @@ import {
     LOAD_INGREDIENTS_REQUEST,
     LOAD_INGREDIENTS_SUCCESS,
     LOAD_INGREDIENTS_FAILURE
-} from '../actions/types';
+} from '../types/actions';
 import {Action} from "redux";
 
 interface IngredientsAction extends Action {

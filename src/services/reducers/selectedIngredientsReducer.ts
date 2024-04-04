@@ -5,7 +5,7 @@ import {
     REMOVE_CONSTRUCTOR_INGREDIENT,
     REPLACE_CONSTRUCTOR_BUNS,
     SORT_CONSTRUCTOR_INGREDIENTS
-} from "../actions/types";
+} from "../types/actions";
 import {Action} from "redux";
 
 interface SelectedIngredientsAction extends Action {

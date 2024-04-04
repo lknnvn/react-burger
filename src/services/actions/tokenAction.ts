@@ -2,7 +2,7 @@ import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
 import fetchData from '../../utils/fetchData';
 import {InitialState} from "../initialState";
-import {REFRESH_TOKEN_FAILURE, REFRESH_TOKEN_SUCCESS} from "./types";
+import {REFRESH_TOKEN_FAILURE, REFRESH_TOKEN_SUCCESS} from "../types/actions";
 import Cookies from "js-cookie";
 
 export const refreshTokenSuccess = (accessToken: string) => ({

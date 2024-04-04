@@ -6,7 +6,7 @@ import {
     LOAD_INGREDIENTS_REQUEST,
     LOAD_INGREDIENTS_SUCCESS,
     LOAD_INGREDIENTS_FAILURE
-} from './types';
+} from '../types/actions';
 import Ingredient from "../../interfaces/ingredient";
 import fetchData from "../../utils/fetchData";
 

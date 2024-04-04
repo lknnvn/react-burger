@@ -15,7 +15,7 @@ const ProtectedRouteElement: React.FC<ProtectedRouteProps> = ({element}) => {
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     const isForgotPasswordVisited = useSelector((state: InitialState) => state.auth.isForgotPasswordVisited);
 
-    if (!isAuthenticated && path === '/profile') {
+    if (!isAuthenticated && (path.startsWith('/profile'))) {
         return <Navigate to="/login" replace/>;
     }
 

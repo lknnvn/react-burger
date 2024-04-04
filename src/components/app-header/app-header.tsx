@@ -23,7 +23,7 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
                     </li>
                     <li>
                         <NavLink
-                            to="/order-list"
+                            to="/feed"
                             className={({ isActive }) => isActiveLink(isActive)}
                         >
                             <ListIcon type='secondary' />

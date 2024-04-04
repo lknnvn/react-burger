@@ -8,6 +8,8 @@
   composes: mr-15 from global;
   display: flex;
   flex-direction: column;
+  max-width: 320px;
+  width: 100%;
 }
 
 .navLink{

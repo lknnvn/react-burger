@@ -10,6 +10,7 @@
 
 .nav{
   composes: container from global;
+  max-width: 1272px;
 
   ul {
     display: flex;

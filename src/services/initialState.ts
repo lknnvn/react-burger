@@ -2,6 +2,7 @@
 import Ingredient from '../interfaces/ingredient';
 import Auth from "../interfaces/auth";
 import User from "../interfaces/user";
+import OrderData from "../interfaces/order";
 
 export interface InitialState {
     ingredients: {
@@ -14,13 +15,18 @@ export interface InitialState {
         bun: Ingredient | null
     };
     ingredientDetails: Ingredient | null;
-    orderDetails: {
+    orderNotification: {
         data: {
             name: string
             order: {
                 number: number
             }
         } | null;
+        loading: boolean;
+        error: any;
+    };
+    orderDetails: {
+        data: OrderData | null;
         loading: boolean;
         error: any;
     };
@@ -42,6 +48,11 @@ export interface InitialState {
         } | null;
         error: any
     };
+    ws: {
+        messages: any;
+        connected: boolean;
+        error: any;
+    }
 }
 
 const rootState: InitialState = {
@@ -56,6 +67,11 @@ const rootState: InitialState = {
     },
     ingredientDetails: null,
     orderDetails: {
+        data: null,
+        loading: false,
+        error: null
+    },
+    orderNotification: {
         data: null,
         loading: false,
         error: null
@@ -77,6 +93,11 @@ const rootState: InitialState = {
     token: {
         data: null,
         error: null
+    },
+    ws: {
+        messages: [],
+        connected: false,
+        error: null,
     }
 };
 

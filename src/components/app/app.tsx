@@ -13,6 +13,10 @@ import IngredientDetailsPage from "../../pages/ingredient-details";
 import {useDispatch} from "react-redux";
 import {fetchIngredients} from "../../services/actions/ingredientsActions";
 import {Action} from "redux";
+import FeedPage from "../../pages/feed";
+import OrdersPage from "../../pages/profile/orders";
+import OrderDetailsPage from "../../pages/order-details";
+
 
 function App() {
     const dispatch = useDispatch()
@@ -32,6 +36,10 @@ function App() {
                 <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />}/>
                 <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} />}/>
                 <Route path="/ingredients/:id" element={<IngredientDetailsPage/>}/>
+                <Route path="/feed" element={<FeedPage/>}/>
+                <Route path="/feed/:number" element={<OrderDetailsPage/>}/>
+                <Route path="/profile/orders" element={<ProtectedRouteElement element={<OrdersPage />} />}/>
+                <Route path="/profile/orders/:number" element={<ProtectedRouteElement element={<OrderDetailsPage />} />}/>
             </Routes>
         </BrowserRouter>
     )

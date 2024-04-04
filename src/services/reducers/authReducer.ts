@@ -1,4 +1,4 @@
-// src/services/reducers/userAuthReducer.ts
+// src/services/reducers/authReducer.ts
 import {
     SIGN_IN_SUCCESS,
     SIGN_IN_FAILURE,
@@ -11,7 +11,7 @@ import {
     FORGOT_PASSWORD_SUCCESS,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILURE
-} from '../actions/types';
+} from '../types/actions';
 import {Action} from "redux";
 import rootState, {InitialState} from "../initialState";
 
