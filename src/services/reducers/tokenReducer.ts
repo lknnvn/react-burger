@@ -1,12 +1,24 @@
-import rootState, {InitialState} from "../initialState";
-import {REFRESH_TOKEN_FAILURE, REFRESH_TOKEN_SUCCESS,} from "../types/actions";
-import {Action} from "redux";
+import {
+    REFRESH_TOKEN_FAILURE,
+    REFRESH_TOKEN_SUCCESS
+} from "../types/tokenActions";
+import {TTokenActions} from "../types/tokenActions";
 
-interface TokenAction extends Action {
-    payload: any;
+export type TTokenState = {
+    data: {
+        accessToken: string;
+        refreshToken: string;
+        success: boolean;
+    } | null;
+    error: any
 }
 
-const tokenReducer = (state = rootState.token, action: TokenAction): InitialState["token"] => {
+export const tokenState: TTokenState = {
+    data: null,
+    error: null
+}
+
+const tokenReducer = (state = tokenState, action: TTokenActions): TTokenState => {
     switch (action.type) {
         case REFRESH_TOKEN_SUCCESS:
             return {

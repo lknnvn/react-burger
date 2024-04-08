@@ -1,26 +1,26 @@
 import React, {useEffect, useState} from "react";
 import styles from "./feed.module.scss";
-import {useDispatch, useSelector} from "react-redux";
 import Order from "../../components/order";
-import {InitialState} from "../../services/initialState";
-import {WS_CONNECTION_CLOSED, WS_CONNECTION_START} from "../../services/types/actions";
+import {WS_CONNECTION_CLOSED, WS_CONNECTION_START} from "../../services/types/wsActions";
 import useModal from "../../hooks/useModal";
 import Modal from "../../components/modal";
 import OrderDetails from "../../components/order-details";
 import OrderData from "../../interfaces/order";
 import {setOrderDetails} from "../../services/actions/orderDetailsActions";
+import {useTDispatch, useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 
 const FeedPage: React.FC = () => {
-    const dispatch = useDispatch();
-    const {orders, total, totalToday} = useSelector((state: InitialState) => state.ws.messages)
+    const dispatch = useTDispatch();
+    const {orders, total, totalToday} = useTSelector((state: InitialState) => state.ws)
     const [doneOrders, setDoneOrders] = useState<any[]>([]);
     const [pendingOrders, setPendingOrders] = useState<any[]>([]);
 
     useEffect(() => {
         if (orders) {
-            const doneOrders = orders.filter((order: any) => order.status === 'done').slice(0, 10);
-            const pendingOrders = orders.filter((order: any) => order.status === 'pending').slice(0, 10);
+            const doneOrders = orders.filter((order: OrderData) => order.status === 'done').slice(0, 10);
+            const pendingOrders = orders.filter((order: OrderData) => order.status === 'pending').slice(0, 10);
             setDoneOrders(doneOrders);
             setPendingOrders(pendingOrders);
         }
@@ -65,7 +65,7 @@ const FeedPage: React.FC = () => {
             <div className={styles.row}>
 
                 <div className={styles.orderList}>
-                    {orders && orders.map((order: any) => (
+                    {orders && orders.map((order: OrderData) => (
                         <Order key={order.number} data={order} handleClick={handleOpenModal} />
                     ))}
                 </div>
@@ -74,7 +74,7 @@ const FeedPage: React.FC = () => {
                         <div>
                             <div className={styles.currentOrdersTitle}>Готовы:</div>
                             <div className={styles.currentOrdersList + " " + styles.currentOrdersFinishList}>
-                                {doneOrders.map((order: any, i: number) => (
+                                {doneOrders.map((order: OrderData, i: number) => (
                                     <div key={i}>{order.number}</div>
                                 ))}
                             </div>
@@ -82,7 +82,7 @@ const FeedPage: React.FC = () => {
                         <div>
                             <div className={styles.currentOrdersTitle}>В работе:</div>
                             <div className={styles.currentOrdersList}>
-                                {pendingOrders.map((order: any, i: number) => (
+                                {pendingOrders.map((order: OrderData, i: number) => (
                                     <div>{order.number}</div>
                                 ))}
                             </div>

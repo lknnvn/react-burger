@@ -5,14 +5,15 @@ import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {signOutRequest} from "../../services/actions/authAction";
 import {Action} from "redux";
 import {useDispatch} from "react-redux";
+import {useTDispatch} from "../../services/types";
 
 const ProfileNavbar: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useTDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleSignOut = () => {
-        dispatch(signOutRequest() as unknown as Action<string>);
+        dispatch(signOutRequest());
         navigate("/");
     };
 

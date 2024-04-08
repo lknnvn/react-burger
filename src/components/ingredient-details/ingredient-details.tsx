@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './ingredient-details.module.scss'
-import {useSelector} from "react-redux"
 import {InitialState} from "../../services/initialState"
+import {useTSelector} from "../../services/types";
 
 interface IngredientDetailsProps {
 
@@ -9,7 +9,7 @@ interface IngredientDetailsProps {
 
 const IngredientDetails: React.FC<IngredientDetailsProps> = () => {
 
-    const ingredient = useSelector((state: InitialState) => state.ingredientDetails)
+    const ingredient = useTSelector((state: InitialState) => state.ingredientDetails[0])
 
     if (!ingredient) {
         return <div className={styles.loadText}>Загрузка...</div>

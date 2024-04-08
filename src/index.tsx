@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import './scss/global.scss'
 import App from './components/app'
 import reportWebVitals from './reportWebVitals'
-import store from "./services/store.js"
+import store from "./services/store"
 import {HTML5Backend} from "react-dnd-html5-backend"
 import {DndProvider} from "react-dnd"
 

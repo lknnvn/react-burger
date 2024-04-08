@@ -1,9 +1,7 @@
-import { ThunkAction } from 'redux-thunk';
-import { Action } from 'redux';
 import fetchData from '../../utils/fetchData';
-import {InitialState} from "../initialState";
-import {REFRESH_TOKEN_FAILURE, REFRESH_TOKEN_SUCCESS} from "../types/actions";
+import {REFRESH_TOKEN_FAILURE, REFRESH_TOKEN_SUCCESS} from "../types/tokenActions";
 import Cookies from "js-cookie";
+import {AppThunkAction} from "../types";
 
 export const refreshTokenSuccess = (accessToken: string) => ({
     type: REFRESH_TOKEN_SUCCESS,
@@ -15,7 +13,7 @@ export const refreshTokenFailure = (error: string) => ({
     payload: error
 });
 
-export const refreshAccessToken = (): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch, getState) => {
+export const refreshAccessToken = (): AppThunkAction => async (dispatch, getState) => {
     try {
         const refreshToken = Cookies.get("refreshToken");
 

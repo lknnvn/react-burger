@@ -1,17 +1,25 @@
 // src/services/reducers/ingredientsReducer.ts
-import rootState, {InitialState} from '../initialState';
 import {
     LOAD_INGREDIENTS_REQUEST,
     LOAD_INGREDIENTS_SUCCESS,
     LOAD_INGREDIENTS_FAILURE
-} from '../types/actions';
-import {Action} from "redux";
+} from '../types/ingredientsActions';
+import {TIngredientsActions} from "../types/ingredientsActions";
+import Ingredient from "../../interfaces/ingredient";
 
-interface IngredientsAction extends Action {
-    payload: any;
+export type TIngredientsState = {
+    list: Ingredient[];
+    loading: boolean;
+    error: any;
 }
 
-const ingredientsReducer = (state = rootState.ingredients, action: IngredientsAction): InitialState["ingredients"] => {
+export const ingredientsState: TIngredientsState = {
+    list: [],
+    loading: false,
+    error: null,
+}
+
+const ingredientsReducer = (state = ingredientsState, action: TIngredientsActions): TIngredientsState => {
     switch (action.type) {
         case LOAD_INGREDIENTS_REQUEST:
             return {

@@ -2,25 +2,24 @@ import React, {ChangeEvent, useState} from "react";
 import styles from "./reset-password.module.scss";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {InitialState} from "../../services/initialState";
 import {resetPasswordRequest} from "../../services/actions/authAction";
-import {Action} from "redux";
+import {useTDispatch, useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 const ResetPasswordPage: React.FC = () => {
 
     const [password, setPassword] = useState('');
     const [resetToken, setResetToken] = useState('');
-    const dispatch = useDispatch();
+    const dispatch = useTDispatch();
     const navigate = useNavigate();
 
-    const error = useSelector((state: InitialState) => state.auth.error);
+    const error = useTSelector((state: InitialState) => state.auth.error);
 
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
         dispatch(resetPasswordRequest(password, resetToken, () => {
             navigate('/login');
-        }) as unknown as Action<string>);
+        }));
     };
 
     return (

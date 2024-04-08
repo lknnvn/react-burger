@@ -11,15 +11,23 @@ import {
     FORGOT_PASSWORD_SUCCESS,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILURE
-} from '../types/actions';
-import {Action} from "redux";
-import rootState, {InitialState} from "../initialState";
+} from '../types/authActions';
+import {TAuthActions} from "../types/authActions";
+import Auth from "../../interfaces/auth";
 
-interface AuthAction extends Action {
-    payload: any;
+export type TAuthState = {
+    data: Auth | null
+    isForgotPasswordVisited: boolean
+    error: any
 }
 
-const authReducer = (state = rootState.auth, action: AuthAction): InitialState["auth"] => {
+export const authState: TAuthState = {
+    data: null,
+    isForgotPasswordVisited: false,
+    error: null
+}
+
+const authReducer = (state = authState, action: TAuthActions): TAuthState => {
     switch (action.type) {
         case SIGN_IN_SUCCESS:
             localStorage.setItem('isAuthenticated', 'true');

@@ -1,18 +1,24 @@
-// src/services/reducers/selectedIngredientsReducer.ts
-import rootState, {InitialState} from "../initialState";
+// src/services/reducers/constructorIngredientsReducer.ts
 import {
     ADD_CONSTRUCTOR_INGREDIENT,
     REMOVE_CONSTRUCTOR_INGREDIENT,
     REPLACE_CONSTRUCTOR_BUNS,
     SORT_CONSTRUCTOR_INGREDIENTS
-} from "../types/actions";
-import {Action} from "redux";
+} from "../types/constructorIngredientsActions";
+import {TConstructorIngredientsActions} from "../types/constructorIngredientsActions";
+import Ingredient from "../../interfaces/ingredient";
 
-interface SelectedIngredientsAction extends Action {
-    payload: any;
+export type TConstructorIngredientsState = {
+    list: Ingredient[],
+    bun: Ingredient | null
 }
 
-const selectedIngredientsReducer = (state = rootState.selectedIngredients, action: SelectedIngredientsAction): InitialState["selectedIngredients"] => {
+export const constructorIngredientsState: TConstructorIngredientsState = {
+    list: [],
+    bun: null
+}
+
+const constructorIngredientsReducer = (state = constructorIngredientsState, action: TConstructorIngredientsActions): TConstructorIngredientsState => {
     switch (action.type) {
         case ADD_CONSTRUCTOR_INGREDIENT:
             return {
@@ -22,7 +28,7 @@ const selectedIngredientsReducer = (state = rootState.selectedIngredients, actio
             }
         case REMOVE_CONSTRUCTOR_INGREDIENT:
             return {
-                ...state, //
+                ...state,
                 list: [...state.list].slice(0, action.payload).concat([...state.list].slice(action.payload + 1))
             };
         case REPLACE_CONSTRUCTOR_BUNS:
@@ -45,4 +51,4 @@ const selectedIngredientsReducer = (state = rootState.selectedIngredients, actio
     }
 };
 
-export default selectedIngredientsReducer;
+export default constructorIngredientsReducer;

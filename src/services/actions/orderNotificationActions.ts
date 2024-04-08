@@ -1,10 +1,12 @@
 // src/services/actions/orderDetailsActions.ts
-import { ThunkAction } from 'redux-thunk';
-import { InitialState } from '../initialState';
-import { Action } from 'redux';
-import { LOAD_ORDER_NOTIFICATION_REQUEST, LOAD_ORDER_NOTIFICATION_SUCCESS, LOAD_ORDER_NOTIFICATION_FAILURE } from '../types/actions';
+import {
+    LOAD_ORDER_NOTIFICATION_REQUEST,
+    LOAD_ORDER_NOTIFICATION_SUCCESS,
+    LOAD_ORDER_NOTIFICATION_FAILURE
+} from '../types/orderNotificationActions';
 import fetchData from "../../utils/fetchData";
 import Cookies from "js-cookie";
+import {AppThunkAction} from "../types";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -28,7 +30,7 @@ export const loadOrderNotificationFailure = (error: Error) => {
     };
 };
 
-export const fetchOrdeNotification = (ingredientIds: (string | undefined)[]): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const fetchOrdeNotification = (ingredientIds: (string | undefined)[]): AppThunkAction => async (dispatch) => {
     dispatch(loadOrderNotificationRequest());
     try {
         const data = await fetchData(`${BASE_URL}/orders`, {
@@ -37,7 +39,7 @@ export const fetchOrdeNotification = (ingredientIds: (string | undefined)[]): Th
                 Authorization: `${Cookies.get("accessToken")}`,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ ingredients: ingredientIds })
+            body: JSON.stringify({ingredients: ingredientIds})
         });
 
         dispatch(loadOrderNotificationSuccess(data));

@@ -2,12 +2,12 @@ import React from "react";
 import styles from "./order.module.scss";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import timeFormat from "../../utils/timeFormat";
-import {useSelector} from "react-redux";
-import {InitialState} from "../../services/initialState";
 import Ingredient from "../../interfaces/ingredient";
 import calculateTotalPrice from "../../utils/calculateTotalPrice";
 import translateStatus from "../../utils/translateStatus";
 import OrderData from "../../interfaces/order";
+import {useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 interface OrderProps {
     data: OrderData
@@ -17,7 +17,7 @@ interface OrderProps {
 
 const Order: React.FC<OrderProps> = ({data, profile = false, handleClick}) => {
 
-    const ingredients = useSelector((state: InitialState) => state.ingredients.list)
+    const ingredients = useTSelector((state: InitialState) => state.ingredients.list)
     const orderIngredients = ingredients.filter((el: Ingredient) =>
         data.ingredients.includes(el._id)
     );

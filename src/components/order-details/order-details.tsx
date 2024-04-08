@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./order-details.module.scss";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useSelector} from "react-redux";
-import {InitialState} from "../../services/initialState";
 import translateStatus from "../../utils/translateStatus";
 import Ingredient from "../../interfaces/ingredient";
 import timeFormat from "../../utils/timeFormat";
 import calculateTotalPrice from "../../utils/calculateTotalPrice";
+import {useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 const FeedIngredientDetail: React.FC<{data: Ingredient}> = (props) => {
     const {data} = props;
@@ -28,8 +28,8 @@ const FeedIngredientDetail: React.FC<{data: Ingredient}> = (props) => {
 }
 
 const OrderDetails: React.FC = () => {
-    const order = useSelector((state: InitialState) => state.orderDetails.data)
-    const ingredients = useSelector((state: InitialState) => state.ingredients.list)
+    const order = useTSelector((state: InitialState) => state.orderDetails.data)
+    const ingredients = useTSelector((state: InitialState) => state.ingredients.list)
 
     if (!order) {
         return <div className={styles.loadText}>Загрузка...</div>

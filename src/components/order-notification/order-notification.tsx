@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './order-notification.module.scss'
-import {InitialState} from "../../services/initialState"
-import {useSelector} from "react-redux"
+import {useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 const OrderNotification: React.FC = () => {
-    const orderNumber = useSelector((state: InitialState) => state.orderNotification.data?.order.number)
-    const loading = useSelector((state: InitialState) => state.orderNotification.loading)
+    const orderNumber = useTSelector((state: InitialState) => state.orderNotification.data?.order.number)
+    const loading = useTSelector((state: InitialState) => state.orderNotification.loading)
 
     if (loading) {
         return <div className="text text_type_main-medium">Отправляем...</div>

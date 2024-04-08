@@ -5,7 +5,7 @@ import {
     REMOVE_CONSTRUCTOR_INGREDIENT,
     REPLACE_CONSTRUCTOR_BUNS,
     SORT_CONSTRUCTOR_INGREDIENTS
-} from '../types/actions';
+} from '../types/constructorIngredientsActions';
 import { v4 as uuid } from 'uuid';
 
 export const addConstructorIngredient = (ingredient: Ingredient) => {

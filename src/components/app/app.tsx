@@ -16,13 +16,14 @@ import {Action} from "redux";
 import FeedPage from "../../pages/feed";
 import OrdersPage from "../../pages/profile/orders";
 import OrderDetailsPage from "../../pages/order-details";
+import {useTDispatch} from "../../services/types";
 
 
 function App() {
-    const dispatch = useDispatch()
+    const dispatch = useTDispatch()
 
     React.useEffect(() => {
-        dispatch(fetchIngredients() as unknown as Action<string>)
+        dispatch(fetchIngredients())
     }, [dispatch])
 
     return (

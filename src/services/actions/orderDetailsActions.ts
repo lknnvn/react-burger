@@ -4,12 +4,10 @@ import {
     LOAD_ORDER_DETAILS_SUCCESS,
     RESET_ORDER_DETAILS,
     SET_ORDER_DETAILS
-} from "../types/actions";
+} from "../types/orderDetailsActions";
 import OrderData from "../../interfaces/order";
-import {ThunkAction} from "redux-thunk";
-import {InitialState} from "../initialState";
-import {Action} from "redux";
 import fetchData from "../../utils/fetchData";
+import {AppThunkAction} from "../types";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -20,7 +18,7 @@ export const loadOrderDetailsRequest = () => {
     };
 };
 
-export const loadOrderDetailsSuccess = (order: object) => {
+export const loadOrderDetailsSuccess = (order: OrderData) => {
     return {
         type: LOAD_ORDER_DETAILS_SUCCESS,
         payload: order,
@@ -44,7 +42,7 @@ export const resetOrderDetails = () => ({
 });
 
 
-export const fetchOrderDetails = (number: string): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const fetchOrderDetails = (number: string): AppThunkAction => async (dispatch) => {
     dispatch(loadOrderDetailsRequest());
     try {
         const {orders} = await fetchData(`${BASE_URL}/orders/${number}`);

@@ -4,7 +4,8 @@ interface OrderData {
     status: string;
     createdAt: string;
     ingredients: string[];
-
+    updatedAt: string;
+    _id: string;
 }
 
 export default OrderData

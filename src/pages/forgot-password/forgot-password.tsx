@@ -5,18 +5,19 @@ import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {forgotPasswordRequest} from "../../services/actions/authAction";
 import {Action} from "redux";
+import {useTDispatch} from "../../services/types";
 
 const ForgotPasswordPage: React.FC = () => {
 
     const [email, setEmail] = useState('');
     const navigate  = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useTDispatch();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await dispatch(forgotPasswordRequest(email, () => {
             navigate('/reset-password');
-        }) as unknown as Action<string>);
+        }));
     };
 
     return (

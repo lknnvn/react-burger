@@ -1,13 +1,28 @@
 // src/services/reducers/orderNotificationReducer.ts
-import { LOAD_ORDER_NOTIFICATION_REQUEST, LOAD_ORDER_NOTIFICATION_SUCCESS, LOAD_ORDER_NOTIFICATION_FAILURE } from '../types/actions';
-import {Action} from "redux";
-import rootState, {InitialState} from "../initialState";
+import {
+    LOAD_ORDER_NOTIFICATION_REQUEST,
+    LOAD_ORDER_NOTIFICATION_SUCCESS,
+    LOAD_ORDER_NOTIFICATION_FAILURE, TOrderNotificationActions
+} from '../types/orderNotificationActions';
 
-interface OrderDetailsAction extends Action {
-    payload: any;
+export type TOrderNotificationState = {
+    data: {
+        name: string
+        order: {
+            number: number
+        }
+    } | null;
+    loading: boolean;
+    error: any;
 }
 
-const orderNotificationReducer = (state = rootState.orderNotification, action: OrderDetailsAction): InitialState["orderNotification"] => {
+export const orderNotificationState: TOrderNotificationState = {
+    data: null,
+    loading: false,
+    error: null
+}
+
+const orderNotificationReducer = (state = orderNotificationState, action: TOrderNotificationActions): TOrderNotificationState => {
     switch (action.type) {
         case LOAD_ORDER_NOTIFICATION_REQUEST:
             return {

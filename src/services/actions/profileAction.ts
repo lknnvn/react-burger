@@ -1,10 +1,8 @@
-import {ThunkAction} from 'redux-thunk';
-import {Action} from 'redux';
 import fetchData from '../../utils/fetchData';
-import {InitialState} from "../initialState";
 import Cookies from "js-cookie";
 import {refreshAccessToken} from "./tokenAction";
 import User from "../../interfaces/user";
+import {AppThunkAction} from "../types";
 
 export const getUserSuccess = (user: User) => ({
     type: 'GET_USER_SUCCESS',
@@ -16,7 +14,7 @@ export const getUserFailure = (error: string) => ({
     payload: error
 });
 
-export const getUser = (): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const getUser = (): AppThunkAction => async (dispatch) => {
     try {
         const response = await fetchData("https://norma.nomoreparties.space/api/auth/user", {
             headers: {
@@ -69,7 +67,7 @@ export const updateUserFailure = (error: string) => ({
     payload: error
 });
 
-export const updateUser = (userData: User): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const updateUser = (userData: User): AppThunkAction => async (dispatch) => {
     try {
         const response = await fetchData("https://norma.nomoreparties.space/api/auth/user", {
             method: "PATCH",
