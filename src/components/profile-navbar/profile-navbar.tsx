@@ -3,8 +3,6 @@ import styles from "../../pages/profile/profile.module.scss";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {signOutRequest} from "../../services/actions/authAction";
-import {Action} from "redux";
-import {useDispatch} from "react-redux";
 import {useTDispatch} from "../../services/types";
 
 const ProfileNavbar: React.FC = () => {
