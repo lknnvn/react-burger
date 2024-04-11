@@ -1,0 +1,71 @@
+.order {
+  composes: mb-4 p-6 from global;
+  background-color: #1C1C21;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.orderHead {
+  composes: pb-6 from global;
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderNumber {
+  composes: text text_type_digits-default from global;
+}
+
+.orderTime {
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.orderName {
+  composes: text text_type_main-medium from global;
+}
+
+.orderStatus {
+  composes: text text_type_main-default mt-2 from global;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.orderMain {
+  composes: text text_type_digits-default mt-6 from global;
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderPrice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.orderIngredients {
+  display: flex;
+}
+
+.oderIngredient {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(#000 0 0) padding-box, linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%) border-box;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -15px;
+  position: relative;
+
+  img {
+    width: 112px;
+  }
+}
+
+@for $i from 1 through 10 {
+  .oderIngredient:nth-child(#{$i}) {
+    z-index: 10 - $i + 1;
+  }
+}

@@ -2,15 +2,15 @@ import React, {useEffect} from "react";
 import styles from "./ingredient-details.module.scss";
 import {useParams} from "react-router-dom";
 import IngredientDetails from "../../components/ingredient-details";
-import {useDispatch, useSelector} from "react-redux";
-import {InitialState} from "../../services/initialState";
 import {setCurrentIngredient} from "../../services/actions/ingredientDetailsActions";
+import {useTDispatch, useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 const IngredientDetailsPage: React.FC = () => {
     const {id} = useParams<{ id: string }>();
-    const dispatch = useDispatch();
+    const dispatch = useTDispatch();
 
-    const ingredientsList = useSelector((state: InitialState) => state.ingredients.list)
+    const ingredientsList = useTSelector((state: InitialState) => state.ingredients.list)
     const ingredient = ingredientsList.find((ingredient) => ingredient._id === id)
 
     useEffect(() => {

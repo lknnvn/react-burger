@@ -5,11 +5,11 @@ import IngredientDetails from "../ingredient-details"
 import Ingredient from "../../interfaces/ingredient"
 import useModal from "../../hooks/useModal"
 import styles from './burger-ingredients.module.scss'
-import {InitialState} from '../../services/initialState'
-import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentIngredient} from '../../services/actions/ingredientDetailsActions'
 import {useInView} from 'react-intersection-observer'
 import {useDrag} from 'react-dnd'
+import {useTDispatch, useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 interface BurgerIngredientProps {
     ingredient: Ingredient
@@ -40,11 +40,11 @@ const BurgerIngredient: React.FC<BurgerIngredientProps> = ({ingredient, handleCl
 }
 
 const BurgerIngredients: React.FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useTDispatch()
     
     const {isOpen, openModal, closeModal} = useModal()
     const [current, setCurrent] = useState('one')
-    const ingredientsData = useSelector((state: InitialState) => state.ingredients.list)
+    const ingredientsData = useTSelector((state: InitialState) => state.ingredients.list)
 
     const buns = ingredientsData.filter((ingredient) => ingredient.type === 'bun')
     const sauces = ingredientsData.filter((ingredient) => ingredient.type === 'sauce')
@@ -71,8 +71,8 @@ const BurgerIngredients: React.FC = () => {
         if (inViewThree) setCurrent('three')
     }, [inViewOne, inViewTwo, inViewThree])
 
-    const selectedFilling = useSelector((state: InitialState) => state.selectedIngredients.list)
-    const selectedBun = useSelector((state: InitialState) => state.selectedIngredients.bun)
+    const selectedFilling = useTSelector((state: InitialState) => state.selectedIngredients.list)
+    const selectedBun = useTSelector((state: InitialState) => state.selectedIngredients.bun)
 
     const selectedFillingCounts = useMemo(() => {
         const ingredientCounts: { [key: string]: number } = {}
@@ -100,7 +100,7 @@ const BurgerIngredients: React.FC = () => {
     return (
         <>
             {isOpen && (
-                <Modal title={"Детали ингредиента"} onClose={handleCloseModal}>
+                <Modal title={"Детали ингредиента"} onClose={handleCloseModal} extraClass={'pt-10 pr-10 pb-15 pl-10'}>
                     <IngredientDetails/>
                 </Modal>
             )}

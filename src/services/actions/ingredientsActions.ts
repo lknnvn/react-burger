@@ -1,14 +1,12 @@
 // src/services/actions/ingredientsActions.ts
-import {ThunkAction} from 'redux-thunk';
-import {InitialState} from '../initialState';
-import {Action} from 'redux';
 import {
     LOAD_INGREDIENTS_REQUEST,
     LOAD_INGREDIENTS_SUCCESS,
     LOAD_INGREDIENTS_FAILURE
-} from './types';
+} from '../types/ingredientsActions';
 import Ingredient from "../../interfaces/ingredient";
 import fetchData from "../../utils/fetchData";
+import {AppThunkAction} from "../types";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -32,7 +30,7 @@ export const loadIngredientsFailure = (error: Error) => {
     };
 };
 
-export const fetchIngredients = (): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const fetchIngredients = (): AppThunkAction => async (dispatch) => {
     dispatch(loadIngredientsRequest());
     try {
         const {data} = await fetchData(`${BASE_URL}/ingredients`);

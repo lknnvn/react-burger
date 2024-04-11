@@ -1,15 +1,15 @@
 // src/components/burger-constructor-ingredient/burger-constructor-ingredient.tsx
 import React, {useRef} from 'react'
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
-import {useDispatch} from 'react-redux'
 import {
     removeConstructorIngredient,
     sortConstructorIngredients
-} from '../../services/actions/selectedIngredientsActions'
+} from '../../services/actions/constructorIngredientsActions'
 import Ingredient from "../../interfaces/ingredient"
 import {DropTargetHookSpec, useDrag, useDrop} from "react-dnd"
 import styles from './burger-constructor-ingredient.module.scss'
 import GrabIcon from "./grab-icon";
+import {useTDispatch} from "../../services/types";
 
 interface ConstructorElementProps {
     ingredient: Ingredient
@@ -21,7 +21,7 @@ const ItemTypes = {
 }
 
 const BurgerConstructorIngredient: React.FC<ConstructorElementProps> = ({ingredient, index}) => {
-    const dispatch = useDispatch()
+    const dispatch = useTDispatch()
 
     const handleRemoveIngredient = () => {
         dispatch(removeConstructorIngredient(index))

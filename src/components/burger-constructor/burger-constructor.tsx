@@ -3,41 +3,53 @@ import React, {useEffect, useState} from 'react'
 import styles from './burger-constructor.module.scss'
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import Modal from "../modal"
-import OrderDetails from "../order-details"
+import OrderNotification from "../order-notification"
 import Ingredient from "../../interfaces/ingredient"
 import useModal from "../../hooks/useModal"
-import {fetchOrderDetails} from "../../services/actions/orderDetailsActions"
-import {useDispatch, useSelector} from "react-redux"
-import {Action} from "redux"
+import {fetchOrdeNotification} from "../../services/actions/orderNotificationActions"
 import {
     addConstructorIngredient,
     replaceConstructorBuns
-} from "../../services/actions/selectedIngredientsActions"
-import {InitialState} from "../../services/initialState"
+} from "../../services/actions/constructorIngredientsActions"
 import {useDrop} from "react-dnd"
 import calculateTotalPrice from "../../utils/calculateTotalPrice"
 import BurgerConstructorIngredient from "../burger-constructor-ingredient"
+import {Navigate} from "react-router-dom";
+import {useTDispatch, useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 
 const BurgerConstructor: React.FC = () => {
 
     const {isOpen, openModal, closeModal} = useModal()
 
-    const filling = useSelector((state: InitialState) => state.selectedIngredients.list)
-    const bun = useSelector((state: InitialState) => state.selectedIngredients.bun)
+    const filling = useTSelector((state: InitialState) => state.selectedIngredients.list)
+    const bun = useTSelector((state: InitialState) => state.selectedIngredients.bun)
 
     const [totalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
-        setTotalPrice(calculateTotalPrice(bun, filling))
+        if(filling && bun){
+            setTotalPrice(calculateTotalPrice([...filling, bun]))
+        }
     }, [bun, filling])
 
-    const dispatch = useDispatch()
+    const dispatch = useTDispatch()
+
+    const [isOrderAttempted, setIsOrderAttempted] = useState(false);
 
     const handleOrderClick = async () => {
         try {
-            const ingredientIds = filling.map(ingredient => ingredient._id)
-            dispatch(fetchOrderDetails(ingredientIds) as unknown as Action<string>)
+            const isAuthenticated = localStorage.getItem('isAuthenticated');
+            if (!isAuthenticated) {
+                setIsOrderAttempted(true);
+                return;
+            }
+
+            const ingredientIds = filling.map((ingredient: Ingredient) => ingredient._id)
+            const allIds = [bun?._id].concat(ingredientIds);
+
+            dispatch(fetchOrdeNotification(allIds))
             openModal()
         } catch (error: any) {
             console.error('Failed to create order:', error.message)
@@ -58,8 +70,8 @@ const BurgerConstructor: React.FC = () => {
     return (
         <>
             {isOpen && (
-                <Modal onClose={closeModal}>
-                    <OrderDetails/>
+                <Modal onClose={closeModal} extraClass={'pt-15 pr-10 pb-30 pl-10'}>
+                    <OrderNotification/>
                 </Modal>
             )}
 
@@ -74,7 +86,7 @@ const BurgerConstructor: React.FC = () => {
                 /> : <div className={`${styles.noIngredient} ${styles.noIngredientBunTop}`}/>}
 
                 <div className={styles.listOther}>
-                {filling.length !== 0 ? filling.map((item, i) => (
+                {filling.length !== 0 ? filling.map((item: Ingredient, i: number) => (
                         <BurgerConstructorIngredient
                             key={item.id}
                             ingredient={item}
@@ -97,7 +109,7 @@ const BurgerConstructor: React.FC = () => {
                 <span className={styles.sum}>{totalPrice} <CurrencyIcon type="primary"/></span>
 
                 <Button onClick={handleOrderClick} htmlType="button" type="primary" size="large">
-                    Оформить заказ
+                    {isOrderAttempted ? <Navigate to="/login" /> : "Оформить заказ"}
                 </Button>
             </div>
         </>

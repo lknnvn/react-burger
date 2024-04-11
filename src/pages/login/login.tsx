@@ -3,18 +3,17 @@ import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import styles from "./login.module.scss";
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {clearError, signInRequest} from "../../services/actions/authAction";
-import {Action} from "redux";
+import {useTDispatch, useTSelector} from "../../services/types";
 import {InitialState} from "../../services/initialState";
 
 const LoginPage: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useTDispatch();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const error = useSelector((state: InitialState) => state.auth.error);
+    const error = useTSelector((state: InitialState) => state.auth.error);
 
     useEffect(() => {
         dispatch(clearError());
@@ -24,7 +23,7 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         await dispatch(signInRequest({ email, password }, () => {
             navigate("/");
-        }) as unknown as Action<string>);
+        }));
     }
 
     return (

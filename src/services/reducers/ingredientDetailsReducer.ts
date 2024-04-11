@@ -1,20 +1,21 @@
 // src/services/reducers/ingredientDetailsReducer.ts
-import {RESET_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT} from '../actions/types';
+import {
+    RESET_CURRENT_INGREDIENT,
+    SET_CURRENT_INGREDIENT,
+    TCurrentIngredientActions
+} from "../types/currentIngredientActions";
 import Ingredient from "../../interfaces/ingredient";
-import {Action} from "redux";
 
-interface IngredientDetailsAction extends Action {
-    payload: Ingredient | string;
-}
+export type TIngredientDetailsState = Array<Ingredient>;
 
-const initialState: Ingredient | null = null;
+export const ingredientDetailsState: TIngredientDetailsState = [];
 
-const ingredientDetailsReducer = (state = initialState, action: IngredientDetailsAction) => {
+const ingredientDetailsReducer = (state = ingredientDetailsState, action: TCurrentIngredientActions): TIngredientDetailsState => {
     switch (action.type) {
         case SET_CURRENT_INGREDIENT:
-            return action.payload;
+            return [action.payload];
         case RESET_CURRENT_INGREDIENT:
-            return null;
+            return [];
         default:
             return state;
     }

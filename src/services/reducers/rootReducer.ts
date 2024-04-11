@@ -1,21 +1,26 @@
 // src/services/reducers/rootReducer.ts
 import { combineReducers } from 'redux';
 import ingredientsReducer from './ingredientsReducer';
-import selectedIngredientsReducer from './selectedIngredientsReducer';
+import constructorIngredientsReducer from './constructorIngredientsReducer';
 import ingredientDetailsReducer from "./ingredientDetailsReducer";
-import orderDetailsReducer from "./orderDetailsReducer";
+import orderNotificationReducer from "./orderNotificationReducer";
 import authReducer from "./authReducer";
 import tokenReducer from "./tokenReducer";
-import userReducer from "./profileReducer";
+import userReducer from "./userReducer";
+import wsReducer from "./wsReducer";
+import orderDetailsReducer from "./orderDetailsReducer";
+import {InitialState} from "../initialState";
 
-const rootReducer = combineReducers({
+const rootReducer = combineReducers<InitialState>({
     ingredients: ingredientsReducer,
-    selectedIngredients: selectedIngredientsReducer,
+    selectedIngredients: constructorIngredientsReducer,
     ingredientDetails: ingredientDetailsReducer,
+    orderNotification: orderNotificationReducer,
     orderDetails: orderDetailsReducer,
     user: userReducer,
     auth: authReducer,
-    token: tokenReducer
+    token: tokenReducer,
+    ws: wsReducer
 });
 
 export default rootReducer;

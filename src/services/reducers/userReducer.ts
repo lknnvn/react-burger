@@ -1,12 +1,29 @@
-import rootState, { InitialState } from "../initialState";
-import { Action } from "redux";
-import {GET_USER_FAILURE, GET_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_SUCCESS} from "../actions/types";
+import {
+    GET_USER_FAILURE,
+    GET_USER_SUCCESS,
+    UPDATE_USER_FAILURE,
+    UPDATE_USER_SUCCESS
+} from "../types/userActions";
+import {TProfileActions} from "../types/userActions";
+import User from "../../interfaces/user";
 
-interface UserAction extends Action {
-    payload: any;
+export type TUserState = {
+    data: User
+    loading: boolean
+    error: null
 }
 
-const userReducer = (state = rootState.user, action: UserAction): InitialState["user"] => {
+export const userState: TUserState = {
+    data: {
+        name: '',
+        email: '',
+        password: ''
+    },
+    loading: true,
+    error: null
+}
+
+const userReducer = (state = userState, action: TProfileActions): TUserState => {
     switch (action.type) {
         case GET_USER_SUCCESS:
             return {

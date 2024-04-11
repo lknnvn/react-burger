@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
 import {Navigate, useLocation} from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useTSelector} from "../services/types";
 import {InitialState} from "../services/initialState";
 
 interface ProtectedRouteProps {
@@ -13,9 +13,9 @@ const ProtectedRouteElement: React.FC<ProtectedRouteProps> = ({element}) => {
     const path = location.pathname;
 
     const isAuthenticated = localStorage.getItem('isAuthenticated');
-    const isForgotPasswordVisited = useSelector((state: InitialState) => state.auth.isForgotPasswordVisited);
+    const isForgotPasswordVisited = useTSelector((state: InitialState) => state.auth.isForgotPasswordVisited);
 
-    if (!isAuthenticated && path === '/profile') {
+    if (!isAuthenticated && (path.startsWith('/profile'))) {
         return <Navigate to="/login" replace/>;
     }
 

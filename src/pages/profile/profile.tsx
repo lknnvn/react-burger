@@ -1,22 +1,19 @@
 import React, {useEffect, useState, ChangeEvent, FormEvent} from "react";
 import styles from "./profile.module.scss";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useNavigate} from "react-router-dom";
-import {signOutRequest} from "../../services/actions/authAction";
-import {useDispatch, useSelector} from "react-redux";
-import {Action} from "redux";
 import {getUser, updateUser} from "../../services/actions/profileAction";
-import {InitialState} from "../../services/initialState";
 import User from "../../interfaces/user";
+import ProfileNavbar from "../../components/profile-navbar";
+import {useTDispatch, useTSelector} from "../../services/types";
+import {InitialState} from "../../services/initialState";
 
 const ProfilePage: React.FC = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const dispatch = useTDispatch();
 
-    const userData = useSelector((state: InitialState) => state.user.data);
+    const userData = useTSelector((state: InitialState) => state.user.data);
 
     useEffect(() => {
-        dispatch(getUser() as unknown as Action<string>);
+        dispatch(getUser());
     }, [dispatch]);
 
     useEffect(() => {
@@ -26,12 +23,12 @@ const ProfilePage: React.FC = () => {
 
     const [user, setUser] = useState<User>(userData);
     const [initialUser, setInitialUser] = useState<User>(userData);
-    const loading = useSelector((state: InitialState) => state.user.loading)
+    const loading = useTSelector((state: InitialState) => state.user.loading)
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await dispatch(updateUser(user) as unknown as Action<string>);
+        await dispatch(updateUser(user));
         setUser(userData);
         setInitialUser(userData);
         setIsEditing(false);
@@ -55,23 +52,11 @@ const ProfilePage: React.FC = () => {
         );
     }
 
-    const handleSignOut = () => {
-        dispatch(signOutRequest() as unknown as Action<string>);
-        navigate("/");
-    };
+
 
     return (
         <main className={styles.main}>
-            <nav className={styles.nav}>
-                <Link className={styles.navLink + ' ' + styles.navLinkActive} to={'/profile'}>Профиль</Link>
-                <Link className={styles.navLink} to={'/profile/orders'}>История заказов</Link>
-                <Button className={styles.navLink} onClick={handleSignOut} htmlType={"button"}>Выход</Button>
-
-                <div className={styles.pageDescription}>
-                    В этом разделе вы можете<br/>
-                    изменить свои персональные данные+
-                </div>
-            </nav>
+            <ProfileNavbar/>
             <form onSubmit={handleSubmit}>
                 <Input
                     type={'text'}

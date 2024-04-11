@@ -3,18 +3,17 @@ import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import styles from "./register.module.scss";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {clearError, signUpRequest} from "../../services/actions/authAction";
-import {Action} from "redux";
 import SignUp from "../../interfaces/signUp";
+import {useTDispatch, useTSelector} from "../../services/types";
 import {InitialState} from "../../services/initialState";
 
 const RegisterPage: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useTDispatch();
     const navigate = useNavigate();
 
     const [registerData, setRegisterData] = useState<SignUp>({email: "", password: "", name: ""});
-    const error = useSelector((state: InitialState) => state.auth.error);
+    const error = useTSelector((state: InitialState) => state.auth.error);
 
     useEffect(() => {
         dispatch(clearError());
@@ -24,7 +23,7 @@ const RegisterPage: React.FC = () => {
         e.preventDefault();
         await dispatch(signUpRequest(registerData, () => {
             navigate("/profile");
-        }) as unknown as Action<string>);
+        }));
     };
 
     return (

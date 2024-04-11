@@ -1,0 +1,5 @@
+.main {
+  composes: container pt-10 from global;
+  padding-top: 120px;
+  max-width: 640px;
+}

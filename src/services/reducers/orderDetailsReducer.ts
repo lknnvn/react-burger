@@ -1,14 +1,41 @@
-// src/services/reducers/orderReducer.ts
-import { LOAD_ORDER_DETAILS_REQUEST, LOAD_ORDER_DETAILS_SUCCESS, LOAD_ORDER_DETAILS_FAILURE } from '../actions/types';
-import {Action} from "redux";
-import rootState, {InitialState} from "../initialState";
+import {
+    LOAD_ORDER_DETAILS_FAILURE,
+    LOAD_ORDER_DETAILS_REQUEST,
+    LOAD_ORDER_DETAILS_SUCCESS,
+    RESET_ORDER_DETAILS,
+    SET_ORDER_DETAILS
+} from "../types/orderDetailsActions";
+import {TOrderDetailsActions} from "../types/orderDetailsActions";
+import OrderData from "../../interfaces/order";
 
-interface OrderDetailsAction extends Action {
-    payload: any;
+export type TOrderDetailsState = {
+    data: OrderData | null;
+    loading: boolean;
+    error: any;
 }
 
-const orderDetailsReducer = (state = rootState.orderDetails, action: OrderDetailsAction): InitialState["orderDetails"] => {
+export const orderDetailsState: TOrderDetailsState = {
+    data: null,
+    loading: false,
+    error: null
+}
+
+const orderDetailsReducer = (state = orderDetailsState, action: TOrderDetailsActions): TOrderDetailsState => {
     switch (action.type) {
+        case SET_ORDER_DETAILS:
+            return {
+                ...state,
+                data: action.payload,
+                loading: false,
+                error: null,
+            };
+        case RESET_ORDER_DETAILS:
+            return {
+                ...state,
+                data: null,
+                loading: false,
+                error: null,
+            };
         case LOAD_ORDER_DETAILS_REQUEST:
             return {
                 ...state,

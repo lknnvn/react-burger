@@ -6,15 +6,13 @@ import {
     SIGN_OUT_SUCCESS,
     SIGN_UP_FAILURE,
     SIGN_UP_SUCCESS
-} from "./types";
+} from "../types/authActions";
 import fetchData from "../../utils/fetchData";
-import {ThunkAction} from "redux-thunk";
-import {InitialState} from "../initialState";
-import {Action} from "redux";
 import SignIn from "../../interfaces/signIn";
 import Cookies from "js-cookie";
 import Auth from "../../interfaces/auth";
 import SignUp from "../../interfaces/signUp";
+import {AppThunkAction} from "../types";
 
 export const signInSuccess = (auth: Auth) => ({
     type: SIGN_IN_SUCCESS,
@@ -67,7 +65,7 @@ export const clearError = () => ({
     type: CLEAR_ERROR,
 });
 
-export const signInRequest = (login: SignIn, onSuccess: () => void): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const signInRequest = (login: SignIn, onSuccess: () => void): AppThunkAction => async (dispatch) => {
     try {
         const response = await fetchData('https://norma.nomoreparties.space/api/auth/login', {
             method: 'POST',
@@ -92,7 +90,7 @@ export const signInRequest = (login: SignIn, onSuccess: () => void): ThunkAction
     }
 };
 
-export const signOutRequest = (): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const signOutRequest = (): AppThunkAction => async (dispatch) => {
     try {
         const refreshToken = Cookies.get("refreshToken");
         if (!refreshToken) {
@@ -115,7 +113,7 @@ export const signOutRequest = (): ThunkAction<void, InitialState, unknown, Actio
     }
 };
 
-export const signUpRequest = (registerData: SignUp, onSuccess: () => void): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const signUpRequest = (registerData: SignUp, onSuccess: () => void): AppThunkAction => async (dispatch) => {
     try {
         const response = await fetchData('https://norma.nomoreparties.space/api/auth/register', {
             method: 'POST',
@@ -140,7 +138,7 @@ export const signUpRequest = (registerData: SignUp, onSuccess: () => void): Thun
     }
 };
 
-export const forgotPasswordRequest = (email: string, onSuccess: () => void): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const forgotPasswordRequest = (email: string, onSuccess: () => void): AppThunkAction => async (dispatch) => {
     try {
         const response = await fetchData('https://norma.nomoreparties.space/api/password-reset', {
             method: 'POST',
@@ -161,7 +159,7 @@ export const forgotPasswordRequest = (email: string, onSuccess: () => void): Thu
     }
 };
 
-export const resetPasswordRequest = (password: string, resetToken: string, onSuccess: () => void): ThunkAction<void, InitialState, unknown, Action<string>> => async (dispatch) => {
+export const resetPasswordRequest = (password: string, resetToken: string, onSuccess: () => void): AppThunkAction => async (dispatch) => {
     try {
         const response = await fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
             method: 'POST',
