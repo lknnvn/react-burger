@@ -39,7 +39,7 @@ const authReducer = (state = authState, action: TAuthActions): TAuthState => {
         case SIGN_IN_FAILURE:
             return {
                 ...state,
-                data: action.payload,
+                data: null,
                 error: action.payload
             };
         case SIGN_OUT_SUCCESS:
@@ -65,7 +65,7 @@ const authReducer = (state = authState, action: TAuthActions): TAuthState => {
         case SIGN_UP_FAILURE:
             return {
                 ...state,
-                data: action.payload,
+                data: null,
                 error: action.payload
             };
         case FORGOT_PASSWORD_SUCCESS:
