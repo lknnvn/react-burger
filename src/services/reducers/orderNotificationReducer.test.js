@@ -5,6 +5,9 @@ import {
     LOAD_ORDER_NOTIFICATION_FAILURE
 } from '../types/orderNotificationActions';
 
+const orderNotificationData = { name: 'John Conor', order: { number: 123 } };
+const errorLoadOrderNotification = 'Failed to load order notification';
+
 describe('orderNotificationReducer', () => {
     it('должен вернуть начальный стейт', () => {
         expect(orderNotificationReducer(undefined, {})).toEqual(orderNotificationState);
@@ -17,16 +20,14 @@ describe('orderNotificationReducer', () => {
     });
 
     it('должен обработать LOAD_ORDER_NOTIFICATION_SUCCESS', () => {
-        const orderNotificationData = { name: 'John', order: { number: 123 } };
         const action = { type: LOAD_ORDER_NOTIFICATION_SUCCESS, payload: orderNotificationData };
         const expectedState = { ...orderNotificationState, data: orderNotificationData, loading: false, error: null };
         expect(orderNotificationReducer(orderNotificationState, action)).toEqual(expectedState);
     });
 
     it('должен обработать LOAD_ORDER_NOTIFICATION_FAILURE', () => {
-        const error = 'Failed to load order notification';
-        const action = { type: LOAD_ORDER_NOTIFICATION_FAILURE, payload: error };
-        const expectedState = { ...orderNotificationState, loading: false, error };
+        const action = { type: LOAD_ORDER_NOTIFICATION_FAILURE, payload: errorLoadOrderNotification };
+        const expectedState = { ...orderNotificationState, loading: false, error: errorLoadOrderNotification };
         expect(orderNotificationReducer(orderNotificationState, action)).toEqual(expectedState);
     });
 });

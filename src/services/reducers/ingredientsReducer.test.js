@@ -5,6 +5,11 @@ import {
     LOAD_INGREDIENTS_FAILURE
 } from '../types/ingredientsActions';
 
+const tomatoIngredient = { id: 'ingredient1', type: 'main', name: 'Tomato', price: 0.5 };
+const ketchupIngredient = { id: 'ingredient2', type: 'sauce', name: 'Ketchup', price: 0.2 };
+const ingredients = [tomatoIngredient, ketchupIngredient];
+const errorLoadIngredients = 'Failed to load ingredients';
+
 describe('ingredientsReducer', () => {
     it('должен вернуть начальный стейт', () => {
         expect(ingredientsReducer(undefined, {})).toEqual(ingredientsState);
@@ -17,19 +22,14 @@ describe('ingredientsReducer', () => {
     });
 
     it('должен обработать LOAD_INGREDIENTS_SUCCESS', () => {
-        const ingredients = [
-            { id: 'ingredient1', type: 'main', name: 'Tomato', price: 0.5 },
-            { id: 'ingredient2', type: 'sauce', name: 'Ketchup', price: 0.2 }
-        ];
         const action = { type: LOAD_INGREDIENTS_SUCCESS, payload: ingredients };
         const expectedState = { ...ingredientsState, list: ingredients };
         expect(ingredientsReducer(ingredientsState, action)).toEqual(expectedState);
     });
 
     it('должен обработать LOAD_INGREDIENTS_FAILURE', () => {
-        const error = 'Failed to load ingredients';
-        const action = { type: LOAD_INGREDIENTS_FAILURE, payload: error };
-        const expectedState = { ...ingredientsState, error };
+        const action = { type: LOAD_INGREDIENTS_FAILURE, payload: errorLoadIngredients };
+        const expectedState = { ...ingredientsState, error: errorLoadIngredients };
         expect(ingredientsReducer(ingredientsState, action)).toEqual(expectedState);
     });
 });

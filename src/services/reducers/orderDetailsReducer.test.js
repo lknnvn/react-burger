@@ -7,13 +7,15 @@ import {
     SET_ORDER_DETAILS
 } from '../types/orderDetailsActions';
 
+const orderData = { id: 'order1', totalPrice: 10.99, items: ['burger', 'drink'] };
+const errorLoadOrderDetails = 'Failed to load order details';
+
 describe('orderDetailsReducer', () => {
     it('должен вернуть начальный стейт', () => {
         expect(orderDetailsReducer(undefined, {})).toEqual(orderDetailsState);
     });
 
     it('должен обработать SET_ORDER_DETAILS', () => {
-        const orderData = { id: 'order1', totalPrice: 10.99, items: ['burger', 'drink'] };
         const action = { type: SET_ORDER_DETAILS, payload: orderData };
         const expectedState = { ...orderDetailsState, data: orderData, loading: false, error: null };
         expect(orderDetailsReducer(orderDetailsState, action)).toEqual(expectedState);
@@ -32,16 +34,14 @@ describe('orderDetailsReducer', () => {
     });
 
     it('должен обработать LOAD_ORDER_DETAILS_SUCCESS', () => {
-        const orderData = { id: 'order1', totalPrice: 10.99, items: ['burger', 'drink'] };
         const action = { type: LOAD_ORDER_DETAILS_SUCCESS, payload: orderData };
         const expectedState = { ...orderDetailsState, data: orderData, loading: false, error: null };
         expect(orderDetailsReducer(orderDetailsState, action)).toEqual(expectedState);
     });
 
     it('должен обработать LOAD_ORDER_DETAILS_FAILURE', () => {
-        const error = 'Failed to load order details';
-        const action = { type: LOAD_ORDER_DETAILS_FAILURE, payload: error };
-        const expectedState = { ...orderDetailsState, loading: false, error };
+        const action = { type: LOAD_ORDER_DETAILS_FAILURE, payload: errorLoadOrderDetails };
+        const expectedState = { ...orderDetailsState, loading: false, error: errorLoadOrderDetails };
         expect(orderDetailsReducer(orderDetailsState, action)).toEqual(expectedState);
     });
 });
