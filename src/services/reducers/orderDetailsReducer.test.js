@@ -6,9 +6,7 @@ import {
     RESET_ORDER_DETAILS,
     SET_ORDER_DETAILS
 } from '../types/orderDetailsActions';
-
-const orderData = { id: 'order1', totalPrice: 10.99, items: ['burger', 'drink'] };
-const errorLoadOrderDetails = 'Failed to load order details';
+import {orderConst} from "./testConstants";
 
 describe('orderDetailsReducer', () => {
     it('должен вернуть начальный стейт', () => {
@@ -16,8 +14,8 @@ describe('orderDetailsReducer', () => {
     });
 
     it('должен обработать SET_ORDER_DETAILS', () => {
-        const action = { type: SET_ORDER_DETAILS, payload: orderData };
-        const expectedState = { ...orderDetailsState, data: orderData, loading: false, error: null };
+        const action = { type: SET_ORDER_DETAILS, payload: orderConst.data };
+        const expectedState = { ...orderDetailsState, data: orderConst.data, loading: false, error: null };
         expect(orderDetailsReducer(orderDetailsState, action)).toEqual(expectedState);
     });
 
@@ -34,14 +32,14 @@ describe('orderDetailsReducer', () => {
     });
 
     it('должен обработать LOAD_ORDER_DETAILS_SUCCESS', () => {
-        const action = { type: LOAD_ORDER_DETAILS_SUCCESS, payload: orderData };
-        const expectedState = { ...orderDetailsState, data: orderData, loading: false, error: null };
+        const action = { type: LOAD_ORDER_DETAILS_SUCCESS, payload: orderConst.data };
+        const expectedState = { ...orderDetailsState, data: orderConst.data, loading: false, error: null };
         expect(orderDetailsReducer(orderDetailsState, action)).toEqual(expectedState);
     });
 
     it('должен обработать LOAD_ORDER_DETAILS_FAILURE', () => {
-        const action = { type: LOAD_ORDER_DETAILS_FAILURE, payload: errorLoadOrderDetails };
-        const expectedState = { ...orderDetailsState, loading: false, error: errorLoadOrderDetails };
+        const action = { type: LOAD_ORDER_DETAILS_FAILURE, payload: orderConst.error };
+        const expectedState = { ...orderDetailsState, loading: false, error: orderConst.error };
         expect(orderDetailsReducer(orderDetailsState, action)).toEqual(expectedState);
     });
 });

@@ -1,14 +1,10 @@
-import ingredientsReducer, { ingredientsState } from './ingredientsReducer';
+import ingredientsReducer, {ingredientsState} from './ingredientsReducer';
 import {
-    LOAD_INGREDIENTS_REQUEST,
-    LOAD_INGREDIENTS_SUCCESS,
-    LOAD_INGREDIENTS_FAILURE
+    LOAD_INGREDIENTS_REQUEST, LOAD_INGREDIENTS_SUCCESS, LOAD_INGREDIENTS_FAILURE
 } from '../types/ingredientsActions';
+import {ingredientConst} from "./testConstants";
 
-const tomatoIngredient = { id: 'ingredient1', type: 'main', name: 'Tomato', price: 0.5 };
-const ketchupIngredient = { id: 'ingredient2', type: 'sauce', name: 'Ketchup', price: 0.2 };
-const ingredients = [tomatoIngredient, ketchupIngredient];
-const errorLoadIngredients = 'Failed to load ingredients';
+const ingredients = [ingredientConst.tomato, ingredientConst.ketchup];
 
 describe('ingredientsReducer', () => {
     it('должен вернуть начальный стейт', () => {
@@ -16,20 +12,20 @@ describe('ingredientsReducer', () => {
     });
 
     it('должен обработать LOAD_INGREDIENTS_REQUEST', () => {
-        const action = { type: LOAD_INGREDIENTS_REQUEST };
-        const expectedState = { ...ingredientsState, loading: true };
+        const action = {type: LOAD_INGREDIENTS_REQUEST};
+        const expectedState = {...ingredientsState, loading: true};
         expect(ingredientsReducer(ingredientsState, action)).toEqual(expectedState);
     });
 
     it('должен обработать LOAD_INGREDIENTS_SUCCESS', () => {
-        const action = { type: LOAD_INGREDIENTS_SUCCESS, payload: ingredients };
-        const expectedState = { ...ingredientsState, list: ingredients };
+        const action = {type: LOAD_INGREDIENTS_SUCCESS, payload: ingredients};
+        const expectedState = {...ingredientsState, list: ingredients};
         expect(ingredientsReducer(ingredientsState, action)).toEqual(expectedState);
     });
 
     it('должен обработать LOAD_INGREDIENTS_FAILURE', () => {
-        const action = { type: LOAD_INGREDIENTS_FAILURE, payload: errorLoadIngredients };
-        const expectedState = { ...ingredientsState, error: errorLoadIngredients };
+        const action = {type: LOAD_INGREDIENTS_FAILURE, payload: ingredientConst.error};
+        const expectedState = {...ingredientsState, error: ingredientConst.error};
         expect(ingredientsReducer(ingredientsState, action)).toEqual(expectedState);
     });
 });

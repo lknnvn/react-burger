@@ -3,8 +3,7 @@ import {
     RESET_CURRENT_INGREDIENT,
     SET_CURRENT_INGREDIENT
 } from '../types/currentIngredientActions';
-
-const tomatoIngredient = { id: 'ingredient1', type: 'main', name: 'Tomato', price: 0.5 };
+import {ingredientConst} from "./testConstants";
 
 describe('ingredientDetailsReducer', () => {
     it('должен вернуть начальный стейт', () => {
@@ -12,13 +11,13 @@ describe('ingredientDetailsReducer', () => {
     });
 
     it('должен обработать SET_CURRENT_INGREDIENT', () => {
-        const action = { type: SET_CURRENT_INGREDIENT, payload: tomatoIngredient };
-        const expectedState = [tomatoIngredient];
+        const action = { type: SET_CURRENT_INGREDIENT, payload: ingredientConst.tomato };
+        const expectedState = [ingredientConst.tomato];
         expect(ingredientDetailsReducer(ingredientDetailsState, action)).toEqual(expectedState);
     });
 
     it('должен обработать RESET_CURRENT_INGREDIENT', () => {
-        const initialState = [tomatoIngredient];
+        const initialState = [ingredientConst.tomato];
         const action = { type: RESET_CURRENT_INGREDIENT };
         const expectedState = [];
         expect(ingredientDetailsReducer(initialState, action)).toEqual(expectedState);

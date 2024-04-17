@@ -5,11 +5,7 @@ import {
     UPDATE_USER_SUCCESS,
     UPDATE_USER_FAILURE
 } from '../types/userActions';
-
-const userData = { name: 'John', email: 'john@example.com' };
-const errorGetUser = 'Failed to get user data';
-const updatedUserData = { name: 'John Conor', email: 'john.conor@example.com' };
-const errorUpdateUser = 'Failed to update user data';
+import {authConst, user, userConst} from "./testConstants";
 
 describe('userReducer', () => {
     it('должен вернуть начальный стейт', () => {
@@ -17,26 +13,26 @@ describe('userReducer', () => {
     });
 
     it('должен обработать GET_USER_SUCCESS', () => {
-        const action = { type: GET_USER_SUCCESS, payload: userData };
-        const expectedState = { ...userState, data: userData, loading: false, error: null };
+        const action = { type: GET_USER_SUCCESS, payload: user };
+        const expectedState = { ...userState, data: user, loading: false, error: null };
         expect(userReducer(userState, action)).toEqual(expectedState);
     });
 
     it('должен обработать GET_USER_FAILURE', () => {
-        const action = { type: GET_USER_FAILURE, payload: errorGetUser };
-        const expectedState = { ...userState, loading: false, error: errorGetUser };
+        const action = { type: GET_USER_FAILURE, payload: userConst.errorGet };
+        const expectedState = { ...userState, loading: false, error: userConst.errorGet };
         expect(userReducer(userState, action)).toEqual(expectedState);
     });
 
     it('должен обработать UPDATE_USER_SUCCESS', () => {
-        const action = { type: UPDATE_USER_SUCCESS, payload: updatedUserData };
-        const expectedState = { ...userState, data: updatedUserData, loading: false, error: null };
+        const action = { type: UPDATE_USER_SUCCESS, payload: userConst.updatedUserData };
+        const expectedState = { ...userState, data: userConst.updatedUserData, loading: false, error: null };
         expect(userReducer(userState, action)).toEqual(expectedState);
     });
 
     it('должен обработать UPDATE_USER_FAILURE', () => {
-        const action = { type: UPDATE_USER_FAILURE, payload: errorUpdateUser };
-        const expectedState = { ...userState, loading: false, error: errorUpdateUser };
+        const action = { type: UPDATE_USER_FAILURE, payload: userConst.errorUpdate };
+        const expectedState = { ...userState, loading: false, error: userConst.errorUpdate };
         expect(userReducer(userState, action)).toEqual(expectedState);
     });
 });
