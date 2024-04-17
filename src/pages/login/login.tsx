@@ -36,15 +36,17 @@ const LoginPage: React.FC = () => {
                     value={email}
                     name={'email'}
                     isIcon={false}
+                    data-cy="email-input"
                 />
                 <PasswordInput
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                     value={password}
                     name={'password'}
                     extraClass="mb-2"
+                    data-cy="password-input"
                 />
 
-                <Button extraClass={styles.formSubmit} htmlType="submit" type="primary" size="medium">
+                    <Button extraClass={styles.formSubmit} htmlType="submit" type="primary" size="medium" data-cy="authorize-submit">
                     Войти
                 </Button>
 

@@ -28,6 +28,7 @@ const BurgerIngredient: React.FC<BurgerIngredientProps> = ({ingredient, handleCl
             ref={drag}
             className={styles.ingredient}
             onClick={() => handleClick(ingredient)}
+            data-cy="ingredient"
         >
             { count > 0 && <Counter count={count} size="default" extraClass="m-1"/>}
             <img src={ingredient.image} alt={ingredient.name} className="mb-1"/>

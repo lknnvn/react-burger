@@ -75,7 +75,7 @@ const BurgerConstructor: React.FC = () => {
                 </Modal>
             )}
 
-            <div ref={drop} className={styles.list}>
+            <div ref={drop} className={styles.list} data-cy="constructor">
 
                 {bun ? <ConstructorElement
                     type="top"
@@ -108,7 +108,7 @@ const BurgerConstructor: React.FC = () => {
             <div className={styles.listFooter}>
                 <span className={styles.sum}>{totalPrice} <CurrencyIcon type="primary"/></span>
 
-                <Button onClick={handleOrderClick} htmlType="button" type="primary" size="large">
+                <Button onClick={handleOrderClick} htmlType="button" type="primary" size="large" data-cy="order-submit">
                     {isOrderAttempted ? <Navigate to="/login" /> : "Оформить заказ"}
                 </Button>
             </div>

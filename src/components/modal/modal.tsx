@@ -11,7 +11,7 @@ interface ModalProps {
     extraClass?: string
 }
 
-const Modal: React.FC<ModalProps> = ({title,  onClose, children, extraClass= ''}) => {
+const Modal: React.FC<ModalProps> = ({title, onClose, children, extraClass = ''}) => {
 
     const handleEscPress = useCallback(
         (e: KeyboardEvent) => {
@@ -33,12 +33,17 @@ const Modal: React.FC<ModalProps> = ({title,  onClose, children, extraClass= ''}
     return ReactDOM.createPortal(
         <>
             <ModalOverlay onClose={onClose}>
-                <div className={`${styles.modal} ${extraClass}`}
-                     onClick={(e) => e.stopPropagation()}>
+                <div
+                    className={`${styles.modal} ${extraClass}`}
+                    onClick={(e) => e.stopPropagation()}
+                    data-cy="modal"
+                >
                     <div className={`${styles.header} ${!title && styles.headerWithTitle}`}
                          style={{justifyContent: title ? "space-between" : "flex-end"}}>
                         {title && <span className={styles.title}>{title}</span>}
-                        <div className={styles.closeIcon}><CloseIcon  type="primary" onClick={onClose}/></div>
+                        <div className={styles.closeIcon} onClick={onClose} data-cy="close-modal">
+                            <CloseIcon type="primary"/>
+                        </div>
                     </div>
                     {children}
                 </div>

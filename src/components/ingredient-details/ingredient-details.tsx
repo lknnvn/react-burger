@@ -18,7 +18,7 @@ const IngredientDetails: React.FC<IngredientDetailsProps> = () => {
     return (
         <div className={styles.wrap}>
             <img className={"mb-4"} src={ingredient.image_large} alt={ingredient.name}/>
-            <div className="text text_type_main-medium mb-8">{ingredient.name}</div>
+            <div className="text text_type_main-medium mb-8" data-cy="ingredient-name">{ingredient.name}</div>
 
             <div className={styles.values}>
                 <div className={styles.value}>
